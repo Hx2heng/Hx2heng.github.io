@@ -195,12 +195,10 @@
       
         <h1 id="前言">前言</h1><p>hexo是一款基于Node.js的静态博客框架。目前在GitHub上已有1375 star 和 219 fork。把hexo部署到github上，这样就能免费使用github给我们提供的服务器和域名发布我们的博客了，是不是很爽。</p>
 <p>以下是windows系统中把hexo部署到github的具体操作方法。</p>
-<p>#步骤</p>
-<p>##1.首先要下载nodejs<br>nodejs官网：</p>
+<h1 id="步骤">步骤</h1><h2 id="1-_首先要下载nodejs">1. 首先要下载nodejs</h2><p>nodejs官网：</p>
 <p><a href="https://nodejs.org/en/" target="_blank" rel="external">https://nodejs.org/en/</a></p>
 <p>这个安装很简单，按常规软件那样安装就可以了。</p>
-<p>##2.安装hexo</p>
-<p>安装hexo也很简单。只需要打开<em>cmd控制台</em>，然后输入</p>
+<h2 id="2-_安装hexo">2. 安装hexo</h2><p>安装hexo也很简单。只需要打开<em>cmd控制台</em>，然后输入</p>
 <blockquote>
 <p>npm install hexo -g </p>
 </blockquote>
@@ -213,13 +211,12 @@
 <p><img src="http://i.imgur.com/GxhaCGA.jpg" alt=""></p>
 <p>附：<a href="http://segmentfault.com/a/1190000002632530?utm_source=tuicool&amp;utm_medium=referral" target="_blank" rel="external">hexo常用命令笔记</a></p>
 <p>（当然第一次安装的话你没有这么多可用的命令。等下你还需要安装的）</p>
-<p>##3.安装git</p>
-<p>关于git的学习，推荐<a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/00137396287703354d8c6c01c904c7d9ff056ae23da865a000" target="_blank" rel="external">廖雪峰的官方网站</a>。<br>引用文中的内容，windows安装git的方法：</p>
+<h2 id="3-_安装git">3. 安装git</h2><p>关于git的学习，推荐<a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/00137396287703354d8c6c01c904c7d9ff056ae23da865a000" target="_blank" rel="external">廖雪峰的官方网站</a>。<br>引用文中的内容，windows安装git的方法：</p>
 <blockquote>
 <p>在Windows上安装Git,需要下载一个单独的exe安装程序，其他什么也不用装，绝对好用。</p>
 <p>msysgit是Windows版的Git，从<a href="http://msysgit.github.io/" target="_blank" rel="external">http://msysgit.github.io/</a>下载，然后按默认选项安装即可。</p>
 </blockquote>
-<p>##初始化hexo<br>在你喜欢的位置新建一个文件夹，我这边是E:/myBlog，<br>然后打开git-bash。<br>cd到文件夹所在位置：</p>
+<h2 id="4-_初始化hexo">4. 初始化hexo</h2><p>在你喜欢的位置新建一个文件夹，我这边是E:/myBlog，<br>然后打开git-bash。<br>cd到文件夹所在位置：</p>
 <blockquote>
 <p>$ cd E:/myBlog</p>
 </blockquote>
@@ -265,8 +262,7 @@
 <p>恭喜，你现在可以打开浏览器输入<code>localhost:4000</code>查看你的博客了。出现hexo欢迎页面就代表成功了。</p>
 <p>到这里我们已经实现了把hexo部署到本地了。</p>
 <p>现在可以使用<code>$ hexo new &#39;your article&#39;</code> 发布你的新博文试试了。</p>
-<p>##（附加内容，引用其他主题）</p>
-<p>官方主题太官方，如何引用其他主题？</p>
+<h2 id="（附加内容，引用其他主题）">（附加内容，引用其他主题）</h2><p>官方主题太官方，如何引用其他主题？</p>
 <p>安装主题的方法很简单,以litten的yilia主题为例子：</p>
 <blockquote>
 <p>$ git clone <a href="http://github.com/litten/hexo-theme-yilia.git">http://github.com/litten/hexo-theme-yilia.git</a> themes/yilia</p>
@@ -278,7 +274,7 @@
 <p>然后hexo g，hexo s 后再打开localhost:4000 就可以看到新主题了。</p>
 <p>附：<a href="http://www.zhihu.com/question/24422335" target="_blank" rel="external">hexo主题知乎回答</a></p>
 <h2 id="注册github账号">注册github账号</h2><p>略~</p>
-<h2 id="关联github账号">关联github账号</h2><ul>
+<h2 id="5-_关联github账号">5. 关联github账号</h2><ul>
 <li>设置本机邮箱和用户名，在git教程里面已经有了：</li>
 </ul>
 <blockquote>
@@ -311,13 +307,14 @@
 </blockquote>
 <p>就证明连接成功了。</p>
 <p>对了，记得设置你的github关联邮箱。</p>
-<h2 id="部署hexo到github">部署hexo到github</h2><ul>
+<h2 id="6-_部署hexo到github">6. 部署hexo到github</h2><ul>
 <li>先看看如何在github开启个人网页<br>在your proflie</li>
 </ul>
 <p><img src="http://i.imgur.com/NAl6wYy.jpg" alt=""></p>
 <p>点击respositories再点击new。进入</p>
 <p><img src="http://i.imgur.com/xJeL3Hd.jpg" alt=""></p>
-<p>repository name那你填写 <code>你的github账号名.git.io</code><br>然后点create。</p>
+<p>repository name那你填写 <code>你的github账号名.github.io</code><br>然后点create。</p>
+<p>（资源命名必须符合这样的规则username/username.github.io）</p>
 <p>它会自动进入这个项目，<br><img src="http://i.imgur.com/VWyqxga.jpg" alt=""><br>点击setting，再点这个。<br><img src="http://i.imgur.com/khWzIKU.jpg" alt=""></p>
 <p>然后填写相关信息，点击<code>Continue to layouts</code>,选个主题,再点Publish page。</p>
 <p>等个1到10分钟？ 然后就可以访问<code>http://你的github账号名.github.io/</code> 了</p>
