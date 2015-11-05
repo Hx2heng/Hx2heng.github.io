@@ -25,7 +25,7 @@ https://nodejs.org/en">
 <meta property="og:image" content="http://i.imgur.com/khWzIKU.jpg">
 <meta property="og:image" content="http://i.imgur.com/KaAPKxZ.jpg">
 <meta property="og:image" content="http://i.imgur.com/zYfVeOl.jpg">
-<meta property="og:updated_time" content="2015-11-05T06:24:38.000Z">
+<meta property="og:updated_time" content="2015-11-05T06:33:53.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="windows下把hexo部署到github">
 <meta name="twitter:description" content="前言hexo是一款基于Node.js的静态博客框架。目前在GitHub上已有1375 star 和 219 fork。把hexo部署到github上，这样就能免费使用github给我们提供的服务器和域名发布我们的博客了，是不是很爽。
@@ -290,11 +290,11 @@ https://nodejs.org/en">
 <blockquote>
 <p>$ git clone <a href="http://github.com/litten/hexo-theme-yilia.git">http://github.com/litten/hexo-theme-yilia.git</a> themes/yilia</p>
 </blockquote>
-<p>然后修改myBolg目录下的_config.yml文件。把theme:后面的值修改为 yilia。<br>接着进入theme/yilia目录,输入：</p>
+<p>然后修改myBolg目录下的<code>_config.yml</code>文件。把<code>theme</code>后面的值修改为 yilia。<br>接着进入theme/yilia目录,输入：</p>
 <blockquote>
 <p>$ git pull</p>
 </blockquote>
-<p>然后hexo g，hexo s 后再打开localhost:4000 就可以看到新主题了。</p>
+<p>然后<code>hexo g</code>，<code>hexo s</code> 后再打开<code>localhost:4000</code>就可以看到新主题了。</p>
 <p>附：<a href="http://www.zhihu.com/question/24422335" target="_blank" rel="external">hexo主题知乎回答</a></p>
 <h2 id="注册github账号">注册github账号</h2><p>略~</p>
 <h2 id="5-_关联github账号">5. 关联github账号</h2><ul>
@@ -311,11 +311,11 @@ https://nodejs.org/en">
 </li>
 </ul>
 <p>记得改成你自己的邮箱，一路回车确定。</p>
-<p>完了后，你可以在用户主目录里找到.ssh目录，里面有id_rsa和id_rsa.pub两个文件，这两个就是SSH Key的秘钥对，id_rsa是私钥，最好不要泄露出去。</p>
+<p>完了后，你可以在用户主目录里找到.ssh目录，里面有<code>id_rsa</code>和<code>id_rsa.pub</code>两个文件，这两个就是SSH Key的秘钥对，<code>id_rsa</code>是私钥，最好不要泄露出去。</p>
 <ul>
 <li>建立关联</li>
 </ul>
-<p>打开id_rsa.pub文件，复制里面全部内容。</p>
+<p>打开<code>id_rsa.pub</code>文件，复制里面全部内容。</p>
 <p>登录github，进入 个人设置 <code>Settings</code>，点击左边栏<code>SSH keys</code>按钮，再点击右边<code>Add SSH key</code>，再在Title顺便输入个名字，把刚才复制的文件内容粘贴到Key里面。 最后点击Add Key。 </p>
 <ul>
 <li>检验是否连接成功</li>
@@ -331,15 +331,15 @@ https://nodejs.org/en">
 <p>就证明连接成功了。</p>
 <p>对了，记得设置你的github关联邮箱。</p>
 <h2 id="6-_部署hexo到github">6. 部署hexo到github</h2><ul>
-<li>先看看如何在github开启个人网页<br>在your proflie</li>
+<li>先看看如何在github开启个人网页<br>在<code>your proflie</code></li>
 </ul>
 <p><img src="http://i.imgur.com/NAl6wYy.jpg" alt=""></p>
-<p>点击respositories再点击new。进入</p>
+<p>点击<code>respositories</code>再点击<code>new</code>。进入</p>
 <p><img src="http://i.imgur.com/xJeL3Hd.jpg" alt=""></p>
-<p>repository name那你填写 <code>你的github账号名.github.io</code><br>然后点create。</p>
+<p><code>repository name</code>那你填写 <code>你的github账号名.github.io</code><br>然后点<code>create</code>。</p>
 <p>（资源命名必须符合这样的规则username/username.github.io）</p>
 <p>它会自动进入这个项目，<br><img src="http://i.imgur.com/VWyqxga.jpg" alt=""><br>点击setting，再点这个。<br><img src="http://i.imgur.com/khWzIKU.jpg" alt=""></p>
-<p>然后填写相关信息，点击<code>Continue to layouts</code>,选个主题,再点Publish page。</p>
+<p>然后填写相关信息，点击<code>Continue to layouts</code>,选个主题,再点<code>Publish page</code>。</p>
 <p>等个1到10分钟？ 然后就可以访问<code>http://你的github账号名.github.io/</code> 了</p>
 <ul>
 <li>接下来就是部署我们的hexo到github了</li>
@@ -351,9 +351,8 @@ https://nodejs.org/en">
 <p>repository: git@github.com:yourname/yourname.github.io.git</p>
 <p>branch: master</p>
 </blockquote>
-<p>注意hexo 更新到3.0之后，deploy的type 的github需要改成git。</p>
-<p>repository改成你的个人github页面的项目SSH地址（就是我们刚才在github开启的个人网页）。</p>
-<p>获取方法是进入项目后，点击SSH后再点击复制。</p>
+<p>注意hexo 更新到3.0之后，deploy的<code>type</code>的github需要改成git。所有冒号后面都要空格一下。</p>
+<p><code>repository</code>改成你的个人github页面的项目SSH地址（就是我们刚才在github开启的个人网页）,获取方法是进入项目后，点击SSH后再点击复制。</p>
 <p><img src="http://i.imgur.com/KaAPKxZ.jpg" alt=""></p>
 <p>修改完后，就要进入bash，输入：</p>
 <blockquote>
@@ -378,8 +377,7 @@ https://nodejs.org/en">
 <p>如果成功，就会提示：</p>
 <p><img src="http://i.imgur.com/zYfVeOl.jpg" alt=""></p>
 <p>这下，你可以登录你的github个人网页看看效果啦。</p>
-<p>##附加链接</p>
-<ol>
+<h2 id="附加链接">附加链接</h2><ol>
 <li>Markdown 语法说明：<a href="http://wowubuntu.com/markdown/" target="_blank" rel="external">http://wowubuntu.com/markdown/</a></li>
 <li>Hexo静态博客使用指南：<a href="http://segmentfault.com/a/1190000002538363" target="_blank" rel="external">http://segmentfault.com/a/1190000002538363</a></li>
 </ol>
