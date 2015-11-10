@@ -105,7 +105,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/前端/" style="font-size: 10px;">前端</a> <a href="/tags/叽里呱啦/" style="font-size: 10px;">叽里呱啦</a> <a href="/tags/技术/" style="font-size: 20px;">技术</a> <a href="/tags/生活/" style="font-size: 10px;">生活</a>
+						<a href="/tags/前端/" style="font-size: 20px;">前端</a> <a href="/tags/叽里呱啦/" style="font-size: 10px;">叽里呱啦</a> <a href="/tags/技术/" style="font-size: 20px;">技术</a> <a href="/tags/生活/" style="font-size: 10px;">生活</a>
 					</div>
 				</section>
 				
@@ -193,8 +193,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <hr>
-<blockquote>
+        <h2 id="配置">配置 </h2><blockquote>
 <pre><code>配置使用git仓库人员的姓名和email
 $ git config --<span class="keyword">global</span> user.name <span class="string">"Your Name"</span>  
 $ git config --<span class="keyword">global</span> user.email you@yourdomain.example.com 
@@ -264,11 +263,7 @@ git remote add origin git@xbc<span class="class">.me</span>:wordpress<span class
 git remote -v  #查看远程仓库
 </code></pre></blockquote>
 <h2 id="提交你的修改">提交你的修改</h2><blockquote>
-<pre><code>git <span class="built_in">add</span> .  <span class="comment">#添加当前修改的文件到暂存区 </span>
-
-git <span class="built_in">add</span> -u  <span class="comment">#被修改过或已删除文件的信息添加到索引库</span>
-
-git commit –m <span class="string">"你的注释"</span>  <span class="comment">#提交你的修改  </span>
+<pre><code>git commit –m <span class="string">"你的注释"</span>  <span class="comment">#提交你的修改  </span>
 
 git push origin master  <span class="comment">#推送你的更新到远程服务器,语法为 git push [远程名] [本地分支]:[远程分支]  </span>
 
@@ -346,23 +341,23 @@ git <span class="keyword">push</span> origin &lt;local_branch&gt;:&lt;remote_bra
 git <span class="keyword">push</span> origin :&lt;remote_branch&gt;  <span class="comment">#先删除本地分支(git br -d &lt;branch&gt;)，然后再push删除远程分支  </span>
 </code></pre></blockquote>
 <h2 id="基本的分支管理">基本的分支管理</h2><blockquote>
-<pre><code>git branch iss53  <span class="comment">#创建一个分支 </span>
+<pre><code>git branch <span class="built_in">dev</span>  #创建一个分支 
 
-git chekcout iss53  <span class="comment">#切换工作目录到iss53 </span>
+git chekcout <span class="built_in">dev</span>  #切换工作目录到<span class="built_in">dev</span> 
 
-git chekcout –b iss53  <span class="comment">#将上面的命令合在一起，创建iss53分支并切换到iss53 </span>
+git chekcout –b <span class="built_in">dev</span>  #将上面的命令合在一起，创建<span class="built_in">dev</span>分支并切换到<span class="built_in">dev</span> 
 
-git <span class="built_in">merge</span> iss53  <span class="comment">#合并iss53分支，当前工作目录为master</span>
+git merge <span class="built_in">dev</span>  #合并<span class="built_in">dev</span>分支，当前工作目录为master
 
-git branch –d iss53  <span class="comment">#合并完成后，没有出现冲突，删除iss53分支 </span>
+git branch –d <span class="built_in">dev</span>  #合并完成后，没有出现冲突，删除<span class="built_in">dev</span>分支 
 
-git fetch  <span class="comment">#拉去远程仓库的数据，语法为git fetch [remote-name]</span>
+git fetch  #拉去远程仓库的数据，语法为git fetch [remote-name]
 
-git pull  <span class="comment">#fetch 会拉去最新的远程仓库数据，但不会自动到当前目录下，要自动合并</span>
+git pull  #fetch 会拉去最新的远程仓库数据，但不会自动到当前目录下，要自动合并
 
-git remote show origin  <span class="comment">#查看远程仓库的信息  </span>
+git remote <span class="built_in">show</span> origin  #查看远程仓库的信息  
 
-git checkout –b dev origin/develop  <span class="comment">#建立本地的dev分支追踪远程仓库的develop分支 </span>
+git checkout –b <span class="built_in">dev</span> origin/develop  #建立本地的<span class="built_in">dev</span>分支追踪远程仓库的develop分支 
 </code></pre></blockquote>
 <h2 id="Git远程仓库管理">Git远程仓库管理</h2><blockquote>
 <pre><code>git remote -v                    <span class="preprocessor"># 查看远程服务器地址和仓库名称  </span>
@@ -381,6 +376,7 @@ git push -u origin <span class="keyword">master</span>                          
 git</span> push -u origin develop  <span class="comment"># 首次将本地develop分支提交到远程develop分支，并且track  </span>
 
 git remote set-head origin <span class="keyword">master</span>   <span class="title"># 设置远程仓库的HEAD</span>指向<span class="literal">master</span>分支  
+
 也可以命令设置跟踪远程库和本地库
 git branch --set-upstream <span class="keyword">master</span> <span class="title">origin</span>/<span class="keyword">master</span>  
 <span class="title">git</span> branch --set-upstream develop origin/develop  
@@ -671,7 +667,7 @@ git branch --set-upstream <span class="keyword">master</span> <span class="title
       
       
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端/">前端</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
 	</div>
 
       
