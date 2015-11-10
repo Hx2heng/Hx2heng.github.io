@@ -189,15 +189,15 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="配置使用git仓库人员的姓名和email">配置使用git仓库人员的姓名和email   </h2><blockquote>
-<pre><code>git config --global user<span class="class">.name</span> <span class="string">"Your Name"</span>  
-git config --global user<span class="class">.email</span> you@yourdomain<span class="class">.example</span><span class="class">.com</span> 
-</code></pre></blockquote>
-<h2 id="配置到缓存_默认15分钟">配置到缓存 默认15分钟 </h2><blockquote>
-<pre><code>git config --global credential<span class="class">.helper</span> cache   
-</code></pre></blockquote>
-<h2 id="修改缓存时间">修改缓存时间  </h2><blockquote>
-<pre><code>git config --<span class="keyword">global</span> credential.helper <span class="comment">'cache --timeout=3600'    </span>
+        <hr>
+<blockquote>
+<pre><code>配置使用git仓库人员的姓名和email
+$ git config --<span class="keyword">global</span> user.name <span class="string">"Your Name"</span>  
+$ git config --<span class="keyword">global</span> user.email you@yourdomain.example.com 
+
+git config --<span class="keyword">global</span> credential.helper cache <span class="preprocessor">#配置到缓存 默认15分钟   </span>
+git config --<span class="keyword">global</span> credential.helper <span class="comment">'cache --timeout=3600'  #修改缓存时间   </span>
+
 git config --<span class="keyword">global</span> color.ui <span class="literal">true</span>  
 git config --<span class="keyword">global</span> <span class="keyword">alias</span>.co checkout  
 git config --<span class="keyword">global</span> <span class="keyword">alias</span>.ci commit  
