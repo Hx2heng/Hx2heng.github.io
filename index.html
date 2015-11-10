@@ -251,25 +251,26 @@ git <span class="command">log</span> <span class="comment">--stat      #查看�
 </code></pre></blockquote>
 <p>tig:Mac上可以使用tig代替diff和log，brew install tig</p>
 <h2 id="取得Git仓库">取得Git仓库</h2><blockquote>
-<pre><code>git init  #初始化一个版本仓库    
-git clone git@github<span class="class">.com</span>:yourProject<span class="class">.git</span>  #Clone远程版本库  
-git remote add origin git@xbc<span class="class">.me</span>:wordpress<span class="class">.git</span>  #添加远程版本库origin，语法为 git remote add [shortname] [url]
+<pre><code>git init  #初始化一个版本仓库   
 
+git clone git@github<span class="class">.com</span>:yourProject<span class="class">.git</span>  #Clone远程版本库  
+
+git remote add origin git@xbc<span class="class">.me</span>:wordpress<span class="class">.git</span>  #添加远程版本库origin
 
 git remote -v  #查看远程仓库
 </code></pre></blockquote>
 <h2 id="提交你的修改">提交你的修改</h2><blockquote>
-<pre><code>git <span class="keyword">add</span> .  <span class="preprocessor">#添加当前修改的文件到暂存区 </span>
+<pre><code>git <span class="built_in">add</span> .  <span class="comment">#添加当前修改的文件到暂存区 </span>
 
-git <span class="keyword">add</span> -u  <span class="preprocessor">#自动追踪文件，包括你已经手动删除的，状态为Deleted的文件 </span>
+git <span class="built_in">add</span> -u  <span class="comment">#被修改过或已删除文件的信息添加到索引库</span>
 
+git commit –m <span class="string">"你的注释"</span>  <span class="comment">#提交你的修改  </span>
 
-git commit –m <span class="string">"你的注释"</span>  <span class="preprocessor">#提交你的修改  </span>
+git push origin master  <span class="comment">#推送你的更新到远程服务器,语法为 git push [远程名] [本地分支]:[远程分支]  </span>
 
+git status  <span class="comment">#查看文件状态 </span>
 
-git <span class="keyword">push</span> origin master  <span class="preprocessor">#推送你的更新到远程服务器,语法为 git push [远程名] [本地分支]:[远程分支]  </span>
-</code></pre><p>   git status  #查看文件状态 </p>
-<pre><code>git <span class="built_in">add</span> readme.txt  <span class="comment">#跟踪新文件</span>
+git <span class="built_in">add</span> readme.txt  <span class="comment">#跟踪新文件</span>
 
 git rm readme.txt  <span class="comment">#从当前跟踪列表移除文件，并完全删除</span>
 
@@ -280,9 +281,10 @@ git mv reademe.txt readme  <span class="comment">#重命名文件 </span>
 git <span class="built_in">log</span>  <span class="comment">#查看提交的历史记录 </span>
 
 git commit <span class="comment">--amend  #修改最后一次提交注释的，利用–amend参数 </span>
-</code></pre><p>-忘记提交某些修改，下面的三条命令只会得到一个提交。 </p>
-<pre><code><span class="title">git</span> commit –m &amp;quot;<span class="title">add</span> readme.txt&amp;quot;  
-<span class="title">git</span> add readme_forgotten  
+
+-忘记提交某些修改，下面的三条命令只会得到一个提交。 
+git commit –m &amp;quot;<span class="built_in">add</span> readme.txt&amp;quot;  
+git <span class="built_in">add</span> readme_forgotten  
 git commit –amend  
 
 
@@ -310,10 +312,8 @@ git br -D <span class="variable">&lt;branch&gt;</span>  <span class="comment"># 
 <h2 id="分支合并和rebase">分支合并和rebase</h2><blockquote>
 <pre><code>git merge <span class="tag">&lt;branch&gt;</span>               <span class="comment"># 将branch分支合并到当前分支  </span>
 git merge origin/<span class="keyword">master</span> <span class="title">--no-ff</span>  <span class="comment"># 不要Fast-Foward合并，这样可以生成merge提交  </span>
-</code></pre></blockquote>
-<pre><code>git rebase <span class="keyword">master</span> <span class="title">&lt;branch</span>&gt;       <span class="comment"># 将master rebase到branch，相当于：  </span>
-</code></pre><blockquote>
-<pre><code>git co <span class="tag">&lt;branch&gt;</span> &amp;&amp; git rebase <span class="keyword">master</span> <span class="title">&amp;&amp; git</span> co <span class="keyword">master</span> <span class="title">&amp;&amp; git</span> merge <span class="tag">&lt;branch&gt;</span>  
+git rebase <span class="keyword">master</span> <span class="title">&lt;branch</span>&gt;       <span class="comment"># 将master rebase到branch，相当于：  </span>
+git co <span class="tag">&lt;branch&gt;</span> &amp;&amp; git rebase <span class="keyword">master</span> <span class="title">&amp;&amp; git</span> co <span class="keyword">master</span> <span class="title">&amp;&amp; git</span> merge <span class="tag">&lt;branch&gt;</span>  
 </code></pre></blockquote>
 <h2 id="Git补丁管理(方便在多台机器上开发同步时用)">Git补丁管理(方便在多台机器上开发同步时用)</h2><blockquote>
 <pre><code>git diff &gt; ../sync.<span class="keyword">patch</span>         <span class="preprocessor"># 生成补丁  </span>
@@ -377,10 +377,8 @@ git push -u origin <span class="keyword">master</span>                          
 git</span> push -u origin develop  <span class="comment"># 首次将本地develop分支提交到远程develop分支，并且track  </span>
 
 git remote set-head origin <span class="keyword">master</span>   <span class="title"># 设置远程仓库的HEAD</span>指向<span class="literal">master</span>分支  
-</code></pre></blockquote>
-<p>也可以命令设置跟踪远程库和本地库<br>-</p>
-<blockquote>
-<pre><code>git branch --set-upstream <span class="keyword">master</span> <span class="title">origin</span>/<span class="keyword">master</span>  
+也可以命令设置跟踪远程库和本地库
+git branch --set-upstream <span class="keyword">master</span> <span class="title">origin</span>/<span class="keyword">master</span>  
 <span class="title">git</span> branch --set-upstream develop origin/develop  
 </code></pre></blockquote>
 
