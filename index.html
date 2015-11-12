@@ -193,7 +193,93 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="配置">配置 </h2><blockquote>
+        <hr>
+<h1 id="常用命令：">常用命令：</h1><p>创建版本库:</p>
+<blockquote>
+<pre><code><span class="title">git</span> init
+</code></pre></blockquote>
+<p>添加文件:</p>
+<blockquote>
+<pre><code>git <span class="built_in">add</span> &lt;<span class="built_in">files</span>&gt;
+git <span class="built_in">add</span> .   <span class="comment">#添加所有文件</span>
+</code></pre></blockquote>
+<p>删除文件:</p>
+<blockquote>
+<pre><code>git rm <span class="tag">&lt;<span class="title">files</span>&gt;</span>
+</code></pre></blockquote>
+<p>提交：</p>
+<blockquote>
+<pre><code>git <span class="operator"><span class="keyword">commit</span> -<span class="keyword">m</span> <span class="string">"描述"</span></span>
+</code></pre></blockquote>
+<p>显示仓库状态：</p>
+<blockquote>
+<pre><code>git <span class="keyword">status</span>
+</code></pre></blockquote>
+<p>显示diff：</p>
+<blockquote>
+<pre><code><span class="title">git</span> diff
+</code></pre></blockquote>
+<p>丢弃工作区的修改：</p>
+<blockquote>
+<pre><code>git checkout <span class="comment">-- file</span>
+</code></pre></blockquote>
+<p>创建分支：</p>
+<blockquote>
+<pre><code><span class="title">git</span> branch dev <span class="comment">#dev是分支名字，这里只是一个例子,下同</span>
+</code></pre></blockquote>
+<p>创建并切换到dev分支：</p>
+<blockquote>
+<pre><code>git checkout -<span class="tag">b</span> dev 
+</code></pre></blockquote>
+<p>查看分支：</p>
+<blockquote>
+<pre><code>git branch  #显示的分支中<span class="escape">``</span>*<span class="escape">``</span>号位置代表当前分支
+</code></pre></blockquote>
+<p>切换到dev分支：</p>
+<blockquote>
+<pre><code><span class="title">git</span> checkout dev
+</code></pre></blockquote>
+<p>合并dev分支到当前分支：</p>
+<blockquote>
+<pre><code>git <span class="built_in">merge</span> dev
+</code></pre></blockquote>
+<p>删除dev分支：</p>
+<blockquote>
+<pre><code><span class="label">git</span> <span class="keyword">branch </span>-d dev
+</code></pre></blockquote>
+<p>显示历史版本：</p>
+<blockquote>
+<pre><code>git <span class="command">log</span>
+</code></pre></blockquote>
+<p>显示历史信息：</p>
+<blockquote>
+<pre><code><span class="title">git</span> show
+</code></pre></blockquote>
+<p>显示历史操作：</p>
+<blockquote>
+<pre><code><span class="title">git</span> reflog
+</code></pre></blockquote>
+<p>退回：</p>
+<blockquote>
+<pre><code>git <span class="operator"><span class="keyword">reset</span> <span class="comment">--hard &lt;HEAD&gt;</span></span>
+</code></pre></blockquote>
+<p>添加远程仓库：</p>
+<blockquote>
+<pre><code><span class="label">git</span> remote <span class="keyword">add </span>origin &lt;<span class="keyword">address&gt;</span>
+</code></pre></blockquote>
+<p>推送并关联master：</p>
+<blockquote>
+<pre><code><span class="label">git</span> <span class="keyword">push </span>-u origin master
+</code></pre></blockquote>
+<p>关联后简化为：</p>
+<blockquote>
+<pre><code><span class="label">git</span> <span class="keyword">push </span>origin master
+</code></pre></blockquote>
+<p>克隆：</p>
+<blockquote>
+<pre><code>git <span class="keyword">clone</span> <span class="title">&lt;address</span>&gt;
+</code></pre></blockquote>
+<h2 id="————————">————————</h2><h1 id="更加详细的命令大全">更加详细的命令大全</h1><h2 id="配置">配置 </h2><blockquote>
 <pre><code>配置使用git仓库人员的姓名和email
 $ git config --<span class="keyword">global</span> user.name <span class="string">"Your Name"</span>  
 $ git config --<span class="keyword">global</span> user.email you@yourdomain.example.com 
