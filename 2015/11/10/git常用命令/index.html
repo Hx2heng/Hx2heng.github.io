@@ -65,7 +65,7 @@ git diff
 丢弃工作区的修改：
 
 git checkout -- file">
-<meta property="og:updated_time" content="2015-11-12T07:29:46.000Z">
+<meta property="og:updated_time" content="2015-11-12T07:34:51.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git常用命令">
 <meta name="twitter:description" content="常用命令：创建版本库:
@@ -432,13 +432,13 @@ git <span class="command">log</span> <span class="comment">--stat      #查看�
 </code></pre></blockquote>
 <p>tig:Mac上可以使用tig代替diff和log，brew install tig</p>
 <h2 id="取得Git仓库">取得Git仓库</h2><blockquote>
-<pre><code>git init  #初始化一个版本仓库   
+<pre><code>git init  <span class="comment">#初始化一个版本仓库   </span>
 
-git clone git@github<span class="class">.com</span>:yourProject<span class="class">.git</span>  #Clone远程版本库  
+git <span class="keyword">clone</span> <span class="title">&lt;address</span>&gt;  <span class="comment">#Clone远程版本库  </span>
 
-git remote add origin git@xbc<span class="class">.me</span>:wordpress<span class="class">.git</span>  #添加远程版本库origin
+git remote add origin <span class="tag">&lt;address&gt;</span>  <span class="comment">#添加远程版本库origin</span>
 
-git remote -v  #查看远程仓库
+git remote -v  <span class="comment">#查看远程仓库</span>
 </code></pre></blockquote>
 <h2 id="提交你的修改">提交你的修改</h2><blockquote>
 <pre><code>git commit –m <span class="string">"你的注释"</span>  <span class="comment">#提交你的修改  </span>
