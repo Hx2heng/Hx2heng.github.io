@@ -105,7 +105,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/前端/" style="font-size: 20px;">前端</a> <a href="/tags/叽里呱啦/" style="font-size: 10px;">叽里呱啦</a> <a href="/tags/技术/" style="font-size: 20px;">技术</a> <a href="/tags/生活/" style="font-size: 10px;">生活</a>
+						<a href="/tags/JS/" style="font-size: 10px;">JS</a> <a href="/tags/前端/" style="font-size: 20px;">前端</a> <a href="/tags/叽里呱啦/" style="font-size: 10px;">叽里呱啦</a> <a href="/tags/技术/" style="font-size: 20px;">技术</a> <a href="/tags/生活/" style="font-size: 10px;">生活</a>
 					</div>
 				</section>
 				
@@ -166,6 +166,105 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-arguments中的callee与caller" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/11/16/arguments中的callee与caller/" class="article-date">
+  	<time datetime="2015-11-16T07:21:47.000Z" itemprop="datePublished">2015-11-16</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/11/16/arguments中的callee与caller/">arguments中的caller与callee</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>arguments中有两个好用的属性，caller与callee，中文意思为呼叫者和被呼叫者。那么，这两个属性，究竟是啥？</p>
+<h2 id="呼叫者caller">呼叫者caller</h2><blockquote>
+<p>含义：返回当前调用该属性的方法的方法</p>
+</blockquote>
+<p>有点绕口，详细点就是：如果一个方法里面，调用了caller，那么caller就返回调用这个方法的方法，如果这个方法是由顶级（浏览器端为window）调用的，则返回undefined。</p>
+<p>我们来举个例子</p>
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params"></span>)</span>{
+    <span class="built_in">console</span>.log(<span class="built_in">arguments</span>.caller);
+}
+
+<span class="function"><span class="keyword">function</span> <span class="title">f2</span>(<span class="params"></span>)</span>{
+    f1();
+}
+
+f1();<span class="comment">//undefined</span>
+f2();<span class="comment">//function f2(){ f1();}</span>
+</code></pre><p>caller在每次函数执行的时候都会重新执行。</p>
+<p>这个特性意味着caller可以用来显示函数的反编译文本。</p>
+<h2 id="被呼叫者callee">被呼叫者callee</h2><blockquote>
+<p>含义：返回当前调用该属性的方法</p>
+</blockquote>
+<p>这个好理解，就是返回调用函数本身。</p>
+<p>还是来看看例子</p>
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">f3</span>(<span class="params"></span>)</span>{
+    <span class="built_in">console</span>.log(<span class="built_in">arguments</span>.callee);
+}
+f1(); <span class="comment">//function f1(){ ...}</span>
+</code></pre><p>利用callee我们可以轻松实现很多功能，例如递归：</p>
+<pre><code>function <span class="keyword">fact</span>(<span class="keyword">n</span>){
+    <span class="keyword">if</span>(<span class="keyword">n</span>&lt;=0){
+        <span class="keyword">return</span> 1;
+    }<span class="keyword">else</span>{
+        <span class="keyword">return</span> <span class="keyword">n</span>*arguments.callee(<span class="keyword">n</span>-1);  
+    }
+}
+</code></pre><p>或者检验实参与形参个数是否相同：</p>
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">f4</span>(<span class="params">x,y,z</span>)</span>{
+    <span class="keyword">if</span>(<span class="built_in">arguments</span>.length === <span class="built_in">arguments</span>.callee.length){
+        <span class="built_in">console</span>.log(<span class="string">'实参形参个数相同'</span>);
+    }<span class="keyword">else</span>{
+        <span class="built_in">console</span>.log(<span class="string">'实参形参个数不同'</span>);
+    }
+}
+f4(<span class="number">1</span>,<span class="number">2</span>);<span class="comment">//实参形参个数不同</span>
+f4(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);<span class="comment">//实参形参个数相同</span>
+</code></pre>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JS/">JS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端/">前端</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
   
     <article id="post-git常用命令" class="article article-type-post" itemscope itemprop="blogPost">
   

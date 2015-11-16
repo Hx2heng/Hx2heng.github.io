@@ -3,30 +3,36 @@
 <head>
   <meta charset="utf-8">
   
-  <title>hello world | Hx2的博客</title>
+  <title>arguments中的caller与callee | Hx2的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="hi,
-折腾了半天，终于把hexo部署到github了。期间遇到了很多问题，明天有空再梳理一下发上来。
-有一个自己的空间，这种感觉挺好的。
-还有谢谢litten的主题，我很喜欢。
-Ok,that is all.">
+  <meta name="description" content="arguments中有两个好用的属性，caller与callee，中文意思为呼叫者和被呼叫者。那么，这两个属性，究竟是啥？
+呼叫者caller
+含义：返回当前调用该属性的方法的方法
+
+有点绕口，详细点就是：如果一个方法里面，调用了caller，那么caller就返回调用这个方法的方法，如果这个方法是由顶级（浏览器端为window）调用的，则返回undefined。
+我们来举个例子
+function">
 <meta property="og:type" content="article">
-<meta property="og:title" content="hello world">
-<meta property="og:url" content="https://github.com/Hx2heng/2015/11/04/hello-world/index.html">
+<meta property="og:title" content="arguments中的caller与callee">
+<meta property="og:url" content="https://github.com/Hx2heng/2015/11/16/arguments中的callee与caller/index.html">
 <meta property="og:site_name" content="Hx2的博客">
-<meta property="og:description" content="hi,
-折腾了半天，终于把hexo部署到github了。期间遇到了很多问题，明天有空再梳理一下发上来。
-有一个自己的空间，这种感觉挺好的。
-还有谢谢litten的主题，我很喜欢。
-Ok,that is all.">
-<meta property="og:updated_time" content="2015-11-04T09:25:41.000Z">
+<meta property="og:description" content="arguments中有两个好用的属性，caller与callee，中文意思为呼叫者和被呼叫者。那么，这两个属性，究竟是啥？
+呼叫者caller
+含义：返回当前调用该属性的方法的方法
+
+有点绕口，详细点就是：如果一个方法里面，调用了caller，那么caller就返回调用这个方法的方法，如果这个方法是由顶级（浏览器端为window）调用的，则返回undefined。
+我们来举个例子
+function">
+<meta property="og:updated_time" content="2015-11-16T07:52:02.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hello world">
-<meta name="twitter:description" content="hi,
-折腾了半天，终于把hexo部署到github了。期间遇到了很多问题，明天有空再梳理一下发上来。
-有一个自己的空间，这种感觉挺好的。
-还有谢谢litten的主题，我很喜欢。
-Ok,that is all.">
+<meta name="twitter:title" content="arguments中的caller与callee">
+<meta name="twitter:description" content="arguments中有两个好用的属性，caller与callee，中文意思为呼叫者和被呼叫者。那么，这两个属性，究竟是啥？
+呼叫者caller
+含义：返回当前调用该属性的方法的方法
+
+有点绕口，详细点就是：如果一个方法里面，调用了caller，那么caller就返回调用这个方法的方法，如果这个方法是由顶级（浏览器端为window）调用的，则返回undefined。
+我们来举个例子
+function">
   
     <link rel="alternative" href="/atom.xml" title="Hx2的博客" type="application/atom+xml">
   
@@ -178,11 +184,11 @@ Ok,that is all.">
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-arguments中的callee与caller" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/11/04/hello-world/" class="article-date">
-  	<time datetime="2015-11-04T09:25:11.000Z" itemprop="datePublished">2015-11-04</time>
+      <a href="/2015/11/16/arguments中的callee与caller/" class="article-date">
+  	<time datetime="2015-11-16T07:21:47.000Z" itemprop="datePublished">2015-11-16</time>
 </a>
     </div>
   
@@ -195,7 +201,7 @@ Ok,that is all.">
         
   
     <h1 class="article-title" itemprop="name">
-      hello world
+      arguments中的caller与callee
     </h1>
   
 
@@ -203,6 +209,10 @@ Ok,that is all.">
       
       <div class="article-info article-info-post">
         
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JS/">JS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端/">前端</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
+	</div>
+
         
 
         <div class="clearfix"></div>
@@ -211,12 +221,52 @@ Ok,that is all.">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>hi,</p>
-<p>折腾了半天，终于把hexo部署到github了。期间遇到了很多问题，明天有空再梳理一下发上来。</p>
-<p>有一个自己的空间，这种感觉挺好的。</p>
-<p>还有谢谢litten的主题，我很喜欢。</p>
-<p>Ok,that is all.</p>
+        <p>arguments中有两个好用的属性，caller与callee，中文意思为呼叫者和被呼叫者。那么，这两个属性，究竟是啥？</p>
+<h2 id="呼叫者caller">呼叫者caller</h2><blockquote>
+<p>含义：返回当前调用该属性的方法的方法</p>
+</blockquote>
+<p>有点绕口，详细点就是：如果一个方法里面，调用了caller，那么caller就返回调用这个方法的方法，如果这个方法是由顶级（浏览器端为window）调用的，则返回undefined。</p>
+<p>我们来举个例子</p>
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params"></span>)</span>{
+    <span class="built_in">console</span>.log(<span class="built_in">arguments</span>.caller);
+}
 
+<span class="function"><span class="keyword">function</span> <span class="title">f2</span>(<span class="params"></span>)</span>{
+    f1();
+}
+
+f1();<span class="comment">//undefined</span>
+f2();<span class="comment">//function f2(){ f1();}</span>
+</code></pre><p>caller在每次函数执行的时候都会重新执行。</p>
+<p>这个特性意味着caller可以用来显示函数的反编译文本。</p>
+<h2 id="被呼叫者callee">被呼叫者callee</h2><blockquote>
+<p>含义：返回当前调用该属性的方法</p>
+</blockquote>
+<p>这个好理解，就是返回调用函数本身。</p>
+<p>还是来看看例子</p>
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">f3</span>(<span class="params"></span>)</span>{
+    <span class="built_in">console</span>.log(<span class="built_in">arguments</span>.callee);
+}
+f1(); <span class="comment">//function f1(){ ...}</span>
+</code></pre><p>利用callee我们可以轻松实现很多功能，例如递归：</p>
+<pre><code>function <span class="keyword">fact</span>(<span class="keyword">n</span>){
+    <span class="keyword">if</span>(<span class="keyword">n</span>&lt;=0){
+        <span class="keyword">return</span> 1;
+    }<span class="keyword">else</span>{
+        <span class="keyword">return</span> <span class="keyword">n</span>*arguments.callee(<span class="keyword">n</span>-1);  
+    }
+}
+</code></pre><p>或者检验实参与形参个数是否相同：</p>
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">f4</span>(<span class="params">x,y,z</span>)</span>{
+    <span class="keyword">if</span>(<span class="built_in">arguments</span>.length === <span class="built_in">arguments</span>.callee.length){
+        <span class="built_in">console</span>.log(<span class="string">'实参形参个数相同'</span>);
+    }<span class="keyword">else</span>{
+        <span class="built_in">console</span>.log(<span class="string">'实参形参个数不同'</span>);
+    }
+}
+f4(<span class="number">1</span>,<span class="number">2</span>);<span class="comment">//实参形参个数不同</span>
+f4(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);<span class="comment">//实参形参个数相同</span>
+</code></pre>
       
     </div>
     
@@ -225,15 +275,11 @@ Ok,that is all.">
     
 <nav id="article-nav">
   
-    <a href="/2015/11/05/把hexo部署到github/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          windows下把hexo部署到github
-        
-      </div>
-    </a>
   
+    <a href="/2015/11/10/git常用命令/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">git常用命令</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
   
 </nav>
 
@@ -260,7 +306,7 @@ Ok,that is all.">
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="hello-world" data-title="hello world" data-url="https://github.com/Hx2heng/2015/11/04/hello-world/"></div>
+	<div class="ds-thread" data-thread-key="arguments中的callee与caller" data-title="arguments中的caller与callee" data-url="https://github.com/Hx2heng/2015/11/16/arguments中的callee与caller/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
