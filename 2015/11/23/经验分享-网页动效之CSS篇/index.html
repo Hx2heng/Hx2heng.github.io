@@ -5,16 +5,16 @@
   
   <title>经验分享-网页动效之CSS篇 | Hx2的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在网页中实现动画效果有很多种方式，例如由js控制的canvas、svg、elements动画，还有由css3控制的svg和elements动画等（忽略flash）。css实现elements动画主要通过transition（过渡效果）和animation（动画）来控制。其中animation通过其强大的函数自定义化和丰富的控制接口以及css3与生俱来的流畅高速渲染效果，成为了动画大军的一直劲旅。">
+  <meta name="description" content="网页动效之CSS篇在网页中实现动画效果有很多种方式，例如由js控制的canvas、svg、elements动画，还有由css3控制的svg和elements动画等（还有flash？）。css实现elements动画主要通过transition（过渡效果）和animation（动画）来控制。其中animation通过其强大的函数自定义化和丰富的控制接口以及css3与生俱来的流畅高速渲染效果，成为了动">
 <meta property="og:type" content="article">
 <meta property="og:title" content="经验分享-网页动效之CSS篇">
 <meta property="og:url" content="https://github.com/Hx2heng/2015/11/23/经验分享-网页动效之CSS篇/index.html">
 <meta property="og:site_name" content="Hx2的博客">
-<meta property="og:description" content="在网页中实现动画效果有很多种方式，例如由js控制的canvas、svg、elements动画，还有由css3控制的svg和elements动画等（忽略flash）。css实现elements动画主要通过transition（过渡效果）和animation（动画）来控制。其中animation通过其强大的函数自定义化和丰富的控制接口以及css3与生俱来的流畅高速渲染效果，成为了动画大军的一直劲旅。">
-<meta property="og:updated_time" content="2015-11-23T03:34:50.000Z">
+<meta property="og:description" content="网页动效之CSS篇在网页中实现动画效果有很多种方式，例如由js控制的canvas、svg、elements动画，还有由css3控制的svg和elements动画等（还有flash？）。css实现elements动画主要通过transition（过渡效果）和animation（动画）来控制。其中animation通过其强大的函数自定义化和丰富的控制接口以及css3与生俱来的流畅高速渲染效果，成为了动">
+<meta property="og:updated_time" content="2015-11-25T00:51:34.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="经验分享-网页动效之CSS篇">
-<meta name="twitter:description" content="在网页中实现动画效果有很多种方式，例如由js控制的canvas、svg、elements动画，还有由css3控制的svg和elements动画等（忽略flash）。css实现elements动画主要通过transition（过渡效果）和animation（动画）来控制。其中animation通过其强大的函数自定义化和丰富的控制接口以及css3与生俱来的流畅高速渲染效果，成为了动画大军的一直劲旅。">
+<meta name="twitter:description" content="网页动效之CSS篇在网页中实现动画效果有很多种方式，例如由js控制的canvas、svg、elements动画，还有由css3控制的svg和elements动画等（还有flash？）。css实现elements动画主要通过transition（过渡效果）和animation（动画）来控制。其中animation通过其强大的函数自定义化和丰富的控制接口以及css3与生俱来的流畅高速渲染效果，成为了动">
   
     <link rel="alternative" href="/atom.xml" title="Hx2的博客" type="application/atom+xml">
   
@@ -203,14 +203,21 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在网页中实现动画效果有很多种方式，例如由js控制的canvas、svg、elements动画，还有由css3控制的svg和elements动画等（忽略flash）。css实现elements动画主要通过transition（过渡效果）和animation（动画）来控制。其中animation通过其强大的函数自定义化和丰富的控制接口以及css3与生俱来的流畅高速渲染效果，成为了动画大军的一直劲旅。</p>
-<p>在制作一些简单的、动画元素少的、交互小的动画。css3的animation是最好的选择。<br>这篇文章的主题就是，用好animation的技巧。</p>
-<p>当然了这个不是基础教程，而是使用技巧。下面简单的不说。</p>
-<h2 id="网页动效之CSS篇">网页动效之CSS篇</h2><p>我们从例子出发，假如我们想要一个小球，在某个时刻（例如点击了一个按钮）向左动一下。这是我们就可以借助 animation-play-state 这个属性。</p>
+        <h2 id="网页动效之CSS篇">网页动效之CSS篇</h2><p>在网页中实现动画效果有很多种方式，例如由js控制的canvas、svg、elements动画，还有由css3控制的svg和elements动画等（还有flash？）。css实现elements动画主要通过transition（过渡效果）和animation（动画）来控制。其中animation通过其强大的函数自定义化和丰富的控制接口以及css3与生俱来的流畅高速渲染效果，成为了动画大军的一直劲旅。</p>
+<p>在制作一些简单的、动画元素少的、交互小的动画。css3的animation是最好的选择。<br>这篇文章的主题就是，用好animation的技巧。基础知识网上一大把就不说了。</p>
+<h2 id="Tips1:如何控制动画开始执行时刻">Tips1:如何控制动画开始执行时刻</h2><p>我们从例子出发，假如我们想要一个小球，在某个时刻（例如点击了一个按钮）向左动一下。这时我们就可以借助 animation-play-state 这个属性。</p>
 <blockquote>
 <p>animation-play-state 属性规定动画正在运行还是暂停。</p>
 </blockquote>
-<script src="http://runjs.cn/gist/2cqhvdfq/all"></script>
+<p>假设我们需要动画的元素为.ele，.ele的上级为.ele-wrap，那么我们可以这样写css：</p>
+<blockquote>
+<p>.ele-wrap .ele{animation-play-state:paused;}</p>
+<p>.playing .ele{animation-play-state:running;}</p>
+<p>.ele{animation:moveToLeft 1s;}</p>
+</blockquote>
+<p>当我们给ele-wrap 加上playing（例如通过点击事件添加）的时候，这个时候ele就会动起来。</p>
+<p>通过这种方法，我们能更加方便清晰地控制某些区域下元素的动画开始执行时刻。</p>
+
       
     </div>
     
