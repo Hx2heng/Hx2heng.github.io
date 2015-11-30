@@ -236,7 +236,7 @@
 </blockquote>
 <p>这样写fadeIn马上执行，而且是从原本执行1s后的状态开始执行。</p>
 <h2 id="Tips5:来回播放动画">Tips5:来回播放动画</h2><p>animation-direction属性在某些情况很好用。比如你想让元素按照轨迹来回移动。按照常规方法你要这样写：</p>
-<pre><code>  <span class="at_rule">@<span class="keyword">keyframes</span> move</span>{
+<pre><code><span class="at_rule">@<span class="keyword">keyframes</span> move</span>{
      0%,100%<span class="rules">{<span class="rule"><span class="attribute">transform</span>:<span class="value"><span class="function">translate</span>(<span class="number">0</span>,<span class="number">0</span>)</span></span>;}</span>
     25%<span class="rules">{<span class="rule"><span class="attribute">transform</span>:<span class="value"><span class="function">translate</span>(<span class="number">0</span>,<span class="number">120px</span>)</span></span>;}</span>
      50%<span class="rules">{<span class="rule"><span class="attribute">transform</span>:<span class="value"><span class="function">translate</span>(<span class="number">120px</span>,<span class="number">120px</span>)</span></span>;}</span>
@@ -245,11 +245,11 @@
 
 <span class="class">.ele</span><span class="rules">{<span class="rule"><span class="attribute">animation</span>:<span class="value">move <span class="number">4s</span> infinite</span></span></span>}
 </code></pre><p>如果用animation-direction ，只要这样</p>
-<pre><code>     <span class="at_rule">@<span class="keyword">keyframes</span> move</span>{
+<pre><code><span class="at_rule">@<span class="keyword">keyframes</span> move</span>{
      0%<span class="rules">{<span class="rule"><span class="attribute">transform</span>:<span class="value"><span class="function">translate</span>(<span class="number">0</span>,<span class="number">0</span>)</span></span>;}</span>
      50%<span class="rules">{<span class="rule"><span class="attribute">transform</span>:<span class="value"><span class="function">translate</span>(<span class="number">0</span>,<span class="number">120px</span>)</span></span>;}</span>
     100%<span class="rules">{<span class="rule"><span class="attribute">transform</span>:<span class="value"><span class="function">translate</span>(<span class="number">120px</span>,<span class="number">120px</span>)</span></span>;}</span>
-  }
+ }
 
 <span class="class">.ele</span><span class="rules">{<span class="rule"><span class="attribute">animation</span>:<span class="value">move <span class="number">4s</span> infinite alternate</span></span></span>}
 </code></pre><p>当然了这只是简单的一个例子。</p>
