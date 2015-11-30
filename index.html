@@ -195,7 +195,7 @@
       
         <h2 id="网页动效之CSS篇">网页动效之CSS篇</h2><p>在网页中实现动画效果有很多种方式，例如由js控制的canvas、svg、elements动画，还有由css3控制的svg和elements动画等（还有flash？）。css实现elements动画主要通过transition（过渡效果）和animation（动画）来控制。其中animation通过其强大的函数自定义化和丰富的控制接口以及css3与生俱来的流畅高速渲染效果，成为了动画大军的一直劲旅。</p>
 <p>在制作一些简单的、动画元素少的、交互小的动画。css3的animation是最好的选择。<br>这篇文章的主题就是，用好animation的技巧。基础知识网上一大把就不说了。</p>
-<h2 id="Tips1:如何控制动画开始执行时刻">Tips1:如何控制动画开始执行时刻</h2><p>我们从例子出发，假如我们想要一个小球，在某个时刻（例如点击了一个按钮）向左动一下。这时我们就可以借助 animation-play-state 这个属性。</p>
+<h2 id="Tips1:控制动画开始执行时刻">Tips1:控制动画开始执行时刻</h2><p>我们从例子出发，假如我们想要一个小球，在某个时刻（例如点击了一个按钮）向左动一下。这时我们就可以借助 animation-play-state 这个属性。</p>
 <blockquote>
 <p>animation-play-state 属性规定动画正在运行还是暂停。</p>
 </blockquote>
@@ -207,6 +207,52 @@
 </blockquote>
 <p>当我们给ele-wrap 加上playing（例如通过点击事件添加）的时候，这个时候ele就会动起来。</p>
 <p>通过这种方法，我们能更加方便清晰地控制某些区域下元素的动画开始执行时刻。</p>
+<h2 id="Tips2:叠加动画">Tips2:叠加动画</h2><p>animation 是支持叠加动画的写法的，但是只能是两种叠加，看代码</p>
+<blockquote>
+<p> .ele{animation:fadeIn 1s,sildeLeft 1s}</p>
+</blockquote>
+<p>这个写法的意思是让元素渐显同时向左移动。</p>
+<blockquote>
+<p> .ele{animation:fadeIn 1s,sildeLeft 1s,sildeUp 1s}</p>
+</blockquote>
+<p>如果是上面这种写法，那么sildeLeft将被忽略。</p>
+<p>另外一种实现方法是采用元素嵌套。</p>
+<p>通过给动画元素外包一个父级元素，然后给父级和子级分别加上动画。</p>
+<blockquote>
+<p>  .ele-wrap{animation:fadeIn 1s}</p>
+<p>  .ele-warp .ele{animation:slideLeft 1s}</p>
+</blockquote>
+<p>这种就不是只能加两种叠加动画了;)。</p>
+<p>要根据具体的情况采用不同的方法。</p>
+<h2 id="Tips3:连接动画">Tips3:连接动画</h2><p>通过animaiton的animation-delay可以实现动画连接。比如上个例子我们不要两个动画同时进行，我们想元素渐显后再向左移动，那么我们可以这样写：</p>
+<blockquote>
+<p>  .ele{animation:fadeIn 1s,sildeLeft 1s 1s}</p>
+</blockquote>
+<p>sildeLeft后面的第一个1s是指动画执行时间，第二个1s是指动画延迟多久才执行。这样写元素就会延迟1s才向左边移动。</p>
+<p>与Tips2一样，用元素嵌套方式可以连接数目更多的动画。</p>
+<h2 id="Tips4:规定动画执行位置">Tips4:规定动画执行位置</h2><p>animation-delay允许负值，负值动画将马上开始，然后跳过动画的前N秒。比如我们希望ele直接就向左移动就可以这样写：</p>
+<blockquote>
+<p>.ele{animation:fadeIn 1s -1s,sildeLeft 1s}</p>
+</blockquote>
+<p>这样写fadeIn马上执行，而且是从原本执行1s后的状态开始执行。</p>
+<h2 id="Tips5:来回播放动画">Tips5:来回播放动画</h2><p>animation-direction属性在某些情况很好用。比如你想让元素按照轨迹来回移动。按照常规方法你要这样写：</p>
+<pre><code>  <span class="at_rule">@<span class="keyword">keyframes</span> move</span>{
+     0%,100%<span class="rules">{<span class="rule"><span class="attribute">transform</span>:<span class="value"><span class="function">translate</span>(<span class="number">0</span>,<span class="number">0</span>)</span></span>;}</span>
+    25%<span class="rules">{<span class="rule"><span class="attribute">transform</span>:<span class="value"><span class="function">translate</span>(<span class="number">0</span>,<span class="number">120px</span>)</span></span>;}</span>
+     50%<span class="rules">{<span class="rule"><span class="attribute">transform</span>:<span class="value"><span class="function">translate</span>(<span class="number">120px</span>,<span class="number">120px</span>)</span></span>;}</span>
+    75%<span class="rules">{<span class="rule"><span class="attribute">transform</span>:<span class="value"><span class="function">translate</span>(<span class="number">0</span>,<span class="number">120px</span>)</span></span>;}</span>
+  }
+
+<span class="class">.ele</span><span class="rules">{<span class="rule"><span class="attribute">animation</span>:<span class="value">move <span class="number">4s</span> infinite</span></span></span>}
+</code></pre><p>如果用animation-direction ，只要这样</p>
+<pre><code>     <span class="at_rule">@<span class="keyword">keyframes</span> move</span>{
+     0%<span class="rules">{<span class="rule"><span class="attribute">transform</span>:<span class="value"><span class="function">translate</span>(<span class="number">0</span>,<span class="number">0</span>)</span></span>;}</span>
+     50%<span class="rules">{<span class="rule"><span class="attribute">transform</span>:<span class="value"><span class="function">translate</span>(<span class="number">0</span>,<span class="number">120px</span>)</span></span>;}</span>
+    100%<span class="rules">{<span class="rule"><span class="attribute">transform</span>:<span class="value"><span class="function">translate</span>(<span class="number">120px</span>,<span class="number">120px</span>)</span></span>;}</span>
+  }
+
+<span class="class">.ele</span><span class="rules">{<span class="rule"><span class="attribute">animation</span>:<span class="value">move <span class="number">4s</span> infinite alternate</span></span></span>}
+</code></pre><p>当然了这只是简单的一个例子。</p>
 
       
     </div>
