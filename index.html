@@ -331,7 +331,7 @@ f2();<span class="comment">//function f2(){ f1();}</span>
 </blockquote>
 <p>这个好理解，就是返回调用函数本身。</p>
 <p>还是来看看例子</p>
-<pre><code><span class="function"><span class="keyword">function</span> <span class="title">f3</span>(<span class="params"></span>)</span>{
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params"></span>)</span>{
     <span class="built_in">console</span>.log(<span class="built_in">arguments</span>.callee);
 }
 f1(); <span class="comment">//function f1(){ ...}</span>
