@@ -193,7 +193,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <pre><code>假设有一个人的类,一般的写法：                       
+        <pre><code><span class="comment">//假设有一个人的类,一般的写法：                       </span>
 <span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name,age</span>)</span>{
     <span class="keyword">this</span>.name = name;
     <span class="keyword">this</span>.age = age;
@@ -208,8 +208,8 @@ Person.prototype={
     }
 }
 
-我们规定这个类创建的对象，其name属性必须小于<span class="number">4</span>个字符
-那么可以这样：
+<span class="comment">//我们规定这个类创建的对象，其name属性必须小于4个字符</span>
+<span class="comment">//那么可以这样：</span>
 <span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name,age</span>)</span>{
     <span class="keyword">if</span>(name.length&gt;<span class="number">4</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'name too long'</span>);
     <span class="keyword">this</span>.name = name;
@@ -224,14 +224,14 @@ Person.prototype={
         <span class="built_in">console</span>.log($<span class="keyword">this</span>.name);
     }
 }
-这样的话我们可以在创建对象之初限制对象的属性
+<span class="comment">//这样的话我们可以在创建对象之初限制对象的属性</span>
 <span class="keyword">var</span> person1 = <span class="keyword">new</span> Person(<span class="string">'Zacarh'</span>,<span class="number">23</span>);<span class="comment">//这样会报错</span>
-但是有个弊端，程序员创建了符合规定的对象，但是他仍可以修改对象的属性成为不符合规则的值
+<span class="comment">//但是有个弊端，程序员创建了符合规定的对象，但是他仍可以修改对象的属性成为不符合规则的值</span>
 <span class="keyword">var</span> person2 = <span class="keyword">new</span> Person(<span class="string">'Tom'</span>,<span class="number">22</span>);<span class="comment">//成功创建</span>
 person2.name = <span class="string">'Zacarh'</span>;<span class="comment">//成功修改为不符合规则的值</span>
 <span class="built_in">console</span>.log(person2.name);<span class="comment">//Zacarh</span>
 
-于是就有了私有变量的由来,我们采用闭包模拟私有变量
+<span class="comment">//于是就有了私有变量的由来,我们采用闭包模拟私有变量</span>
 <span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>)</span>{
     <span class="keyword">var</span> name,age;<span class="comment">//这里的变量外部访问不到，可以看成私有变量</span>
     <span class="keyword">this</span>.setName=<span class="function"><span class="keyword">function</span>(<span class="params">nameAgrument</span>)</span>{<span class="comment">//这个是特权方法，可以访问私有变量</span>
@@ -247,7 +247,7 @@ person2.name = <span class="string">'Zacarh'</span>;<span class="comment">//成�
 person1.setName(<span class="string">'Tom'</span>);<span class="comment">//可以</span>
 person1.say();<span class="comment">//输出Tom，而且此时你无法直接更改name的值了，必须要通过setName函数才可以。</span>
 
-上面那种做法的弊端就是，每创建一个函数，特权函数也会创建一次，这样会耗费更多的内存，不像用prototype那样所有对象共用prototype上面的方法。
+<span class="comment">//上面那种做法的弊端就是，每创建一个函数，特权函数也会创建一次，这样会耗费更多的内存，不像用prototype那样所有对象共用prototype上面的方法。</span>
 </code></pre>
       
     </div>
