@@ -247,7 +247,7 @@ person2.name = <span class="string">'Zacarh'</span>;<span class="comment">//成�
 person1.setName(<span class="string">'Tom'</span>);<span class="comment">//可以</span>
 person1.say();<span class="comment">//输出Tom，而且此时你无法直接更改name的值了，必须要通过setName函数才可以。</span>
 
-<span class="comment">//上面那种做法的弊端就是，每创建一个函数，特权函数也会创建一次，这样会耗费更多的内存，不像用prototype那样所有对象共用prototype上面的方法。</span>
+<span class="comment">//上面那种做法的弊端就是，每创建一个对象，特权函数也会创建一次，这样会耗费更多的内存，不像用prototype那样所有对象共用prototype上面的方法。</span>
 </code></pre>
       
     </div>
