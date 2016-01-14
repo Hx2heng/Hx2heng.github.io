@@ -167,6 +167,115 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-js设计模式-模拟私有变量" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/01/14/js设计模式-模拟私有变量/" class="article-date">
+  	<time datetime="2016-01-14T08:08:59.000Z" itemprop="datePublished">2016-01-14</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/14/js设计模式-模拟私有变量/">js设计模式-模拟私有变量</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code>假设有一个人的类,一般的写法：                       
+<span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name,age</span>)</span>{
+    <span class="keyword">this</span>.name = name;
+    <span class="keyword">this</span>.age = age;
+};
+Person.prototype={
+    born:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+        <span class="keyword">return</span> <span class="keyword">this</span>;
+    },
+    say:<span class="function"><span class="keyword">function</span>(<span class="params">word</span>)</span>{
+        <span class="keyword">var</span> $<span class="keyword">this</span> = <span class="keyword">this</span>;
+        <span class="built_in">console</span>.log($<span class="keyword">this</span>.name);
+    }
+}
+
+我们规定这个类创建的对象，其name属性必须小于<span class="number">4</span>个字符
+那么可以这样：
+<span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name,age</span>)</span>{
+    <span class="keyword">if</span>(name.length&gt;<span class="number">4</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'name too long'</span>);
+    <span class="keyword">this</span>.name = name;
+    <span class="keyword">this</span>.age = age;
+};
+Person.prototype={
+    born:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+        <span class="keyword">return</span> <span class="keyword">this</span>;
+    },
+    say:<span class="function"><span class="keyword">function</span>(<span class="params">word</span>)</span>{
+        <span class="keyword">var</span> $<span class="keyword">this</span> = <span class="keyword">this</span>;
+        <span class="built_in">console</span>.log($<span class="keyword">this</span>.name);
+    }
+}
+这样的话我们可以在创建对象之初限制对象的属性
+<span class="keyword">var</span> person1 = <span class="keyword">new</span> Person(<span class="string">'Zacarh'</span>,<span class="number">23</span>);<span class="comment">//这样会报错</span>
+但是有个弊端，程序员创建了符合规定的对象，但是他仍可以修改对象的属性成为不符合规则的值
+<span class="keyword">var</span> person2 = <span class="keyword">new</span> Person(<span class="string">'Tom'</span>,<span class="number">22</span>);<span class="comment">//成功创建</span>
+person2.name = <span class="string">'Zacarh'</span>;<span class="comment">//成功修改为不符合规则的值</span>
+<span class="built_in">console</span>.log(person2.name);<span class="comment">//Zacarh</span>
+
+于是就有了私有变量的由来,我们采用闭包模拟私有变量
+<span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>)</span>{
+    <span class="keyword">var</span> name,age;<span class="comment">//这里的变量外部访问不到，可以看成私有变量</span>
+    <span class="keyword">this</span>.setName=<span class="function"><span class="keyword">function</span>(<span class="params">nameAgrument</span>)</span>{<span class="comment">//这个是特权方法，可以访问私有变量</span>
+        <span class="keyword">if</span>(nameAgrument.length&gt;<span class="number">4</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'name too long'</span>);
+        name = nameAgrument;<span class="comment">//特权方法内却可以访问到外部变量。js函数作用域是在定义的时候确定的，不是在执行的时候确定的</span>
+    };
+    <span class="keyword">this</span>.say = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+        <span class="built_in">console</span>.log(name);<span class="comment">//这里就不用this.name了</span>
+    }
+}
+<span class="keyword">var</span> person1 = <span class="keyword">new</span> Person();
+<span class="comment">// person1.setName('Zacarh');//报错，字符长度大于4</span>
+person1.setName(<span class="string">'Tom'</span>);<span class="comment">//可以</span>
+person1.say();<span class="comment">//输出Tom，而且此时你无法直接更改name的值了，必须要通过setName函数才可以。</span>
+
+上面那种做法的弊端就是，每创建一个函数，特权函数也会创建一次，这样会耗费更多的内存，不像用prototype那样所有对象共用prototype上面的方法。
+</code></pre>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JS/">JS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端/">前端</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
     <article id="post-经验分享-网页动效之CSS篇" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -1050,7 +1159,7 @@ git branch --set-upstream <span class="keyword">master</span> <span class="title
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2015 Hx2
+    		&copy; 2016 Hx2
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten changed by Hx2

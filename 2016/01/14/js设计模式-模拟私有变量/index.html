@@ -3,36 +3,45 @@
 <head>
   <meta charset="utf-8">
   
-  <title>arguments中的caller与callee | Hx2的博客</title>
+  <title>js设计模式-模拟私有变量 | Hx2的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="arguments中有两个好用的属性，caller与callee，中文意思为呼叫者和被呼叫者。那么，这两个属性，究竟是啥？
-呼叫者caller
-含义：返回当前调用该属性的方法的方法
-
-有点绕口，详细点就是：如果一个方法里面，调用了caller，那么caller就返回调用这个方法的方法，如果这个方法是由顶级（浏览器端为window）调用的，则返回undefined。
-我们来举个例子
-function">
+  <meta name="description" content="假设有一个人的类,一般的写法：                       
+function Person(name,age){
+    this.name = name;
+    this.age = age;
+};
+Person.prototype={
+    born:function(){
+        return this;
+    },
+    say:function(word">
 <meta property="og:type" content="article">
-<meta property="og:title" content="arguments中的caller与callee">
-<meta property="og:url" content="https://github.com/Hx2heng/2015/11/16/arguments中的callee与caller/index.html">
+<meta property="og:title" content="js设计模式-模拟私有变量">
+<meta property="og:url" content="https://github.com/Hx2heng/2016/01/14/js设计模式-模拟私有变量/index.html">
 <meta property="og:site_name" content="Hx2的博客">
-<meta property="og:description" content="arguments中有两个好用的属性，caller与callee，中文意思为呼叫者和被呼叫者。那么，这两个属性，究竟是啥？
-呼叫者caller
-含义：返回当前调用该属性的方法的方法
-
-有点绕口，详细点就是：如果一个方法里面，调用了caller，那么caller就返回调用这个方法的方法，如果这个方法是由顶级（浏览器端为window）调用的，则返回undefined。
-我们来举个例子
-function">
-<meta property="og:updated_time" content="2015-12-01T00:46:47.000Z">
+<meta property="og:description" content="假设有一个人的类,一般的写法：                       
+function Person(name,age){
+    this.name = name;
+    this.age = age;
+};
+Person.prototype={
+    born:function(){
+        return this;
+    },
+    say:function(word">
+<meta property="og:updated_time" content="2016-01-14T08:11:49.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="arguments中的caller与callee">
-<meta name="twitter:description" content="arguments中有两个好用的属性，caller与callee，中文意思为呼叫者和被呼叫者。那么，这两个属性，究竟是啥？
-呼叫者caller
-含义：返回当前调用该属性的方法的方法
-
-有点绕口，详细点就是：如果一个方法里面，调用了caller，那么caller就返回调用这个方法的方法，如果这个方法是由顶级（浏览器端为window）调用的，则返回undefined。
-我们来举个例子
-function">
+<meta name="twitter:title" content="js设计模式-模拟私有变量">
+<meta name="twitter:description" content="假设有一个人的类,一般的写法：                       
+function Person(name,age){
+    this.name = name;
+    this.age = age;
+};
+Person.prototype={
+    born:function(){
+        return this;
+    },
+    say:function(word">
   
     <link rel="alternative" href="/atom.xml" title="Hx2的博客" type="application/atom+xml">
   
@@ -184,11 +193,11 @@ function">
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-arguments中的callee与caller" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-js设计模式-模拟私有变量" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/11/16/arguments中的callee与caller/" class="article-date">
-  	<time datetime="2015-11-16T07:21:47.000Z" itemprop="datePublished">2015-11-16</time>
+      <a href="/2016/01/14/js设计模式-模拟私有变量/" class="article-date">
+  	<time datetime="2016-01-14T08:08:59.000Z" itemprop="datePublished">2016-01-14</time>
 </a>
     </div>
   
@@ -201,7 +210,7 @@ function">
         
   
     <h1 class="article-title" itemprop="name">
-      arguments中的caller与callee
+      js设计模式-模拟私有变量
     </h1>
   
 
@@ -221,53 +230,62 @@ function">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>arguments中有两个好用的属性，caller与callee，中文意思为呼叫者和被呼叫者。那么，这两个属性，究竟是啥？</p>
-<h2 id="呼叫者caller">呼叫者caller</h2><blockquote>
-<p>含义：返回当前调用该属性的方法的方法</p>
-</blockquote>
-<p>有点绕口，详细点就是：如果一个方法里面，调用了caller，那么caller就返回调用这个方法的方法，如果这个方法是由顶级（浏览器端为window）调用的，则返回undefined。</p>
-<p>我们来举个例子</p>
-<pre><code><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params"></span>)</span>{
-    <span class="built_in">console</span>.log(<span class="built_in">arguments</span>.caller);
-}
-
-<span class="function"><span class="keyword">function</span> <span class="title">f2</span>(<span class="params"></span>)</span>{
-    f1();
-}
-
-f1();<span class="comment">//undefined</span>
-f2();<span class="comment">//function f2(){ f1();}</span>
-</code></pre><p>caller在每次函数执行的时候都会重新执行。</p>
-<p>这个特性意味着caller可以用来显示函数的反编译文本。</p>
-<h2 id="被呼叫者callee">被呼叫者callee</h2><blockquote>
-<p>含义：返回当前调用该属性的方法</p>
-</blockquote>
-<p>这个好理解，就是返回调用函数本身。</p>
-<p>还是来看看例子</p>
-<pre><code><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params"></span>)</span>{
-    <span class="built_in">console</span>.log(<span class="built_in">arguments</span>.callee);
-}
-f1(); <span class="comment">//function f1(){ ...}</span>
-</code></pre><p>利用callee我们可以轻松实现很多功能，例如递归：</p>
-<pre><code>function <span class="keyword">fact</span>(<span class="keyword">n</span>){
-    <span class="keyword">if</span>(<span class="keyword">n</span>&lt;=0){
-        <span class="keyword">return</span> 1;
-    }<span class="keyword">else</span>{
-        <span class="keyword">return</span> <span class="keyword">n</span>*arguments.callee(<span class="keyword">n</span>-1);  
+        <pre><code>假设有一个人的类,一般的写法：                       
+<span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name,age</span>)</span>{
+    <span class="keyword">this</span>.name = name;
+    <span class="keyword">this</span>.age = age;
+};
+Person.prototype={
+    born:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+        <span class="keyword">return</span> <span class="keyword">this</span>;
+    },
+    say:<span class="function"><span class="keyword">function</span>(<span class="params">word</span>)</span>{
+        <span class="keyword">var</span> $<span class="keyword">this</span> = <span class="keyword">this</span>;
+        <span class="built_in">console</span>.log($<span class="keyword">this</span>.name);
     }
 }
-</code></pre><p>或者检验实参与形参个数是否相同：</p>
-<pre><code><span class="function"><span class="keyword">function</span> <span class="title">f4</span>(<span class="params">x,y,z</span>)</span>{
-    <span class="keyword">if</span>(<span class="built_in">arguments</span>.length === <span class="built_in">arguments</span>.callee.length){
-        <span class="built_in">console</span>.log(<span class="string">'实参形参个数相同'</span>);
-    }<span class="keyword">else</span>{
-        <span class="built_in">console</span>.log(<span class="string">'实参形参个数不同'</span>);
+
+我们规定这个类创建的对象，其name属性必须小于<span class="number">4</span>个字符
+那么可以这样：
+<span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name,age</span>)</span>{
+    <span class="keyword">if</span>(name.length&gt;<span class="number">4</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'name too long'</span>);
+    <span class="keyword">this</span>.name = name;
+    <span class="keyword">this</span>.age = age;
+};
+Person.prototype={
+    born:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+        <span class="keyword">return</span> <span class="keyword">this</span>;
+    },
+    say:<span class="function"><span class="keyword">function</span>(<span class="params">word</span>)</span>{
+        <span class="keyword">var</span> $<span class="keyword">this</span> = <span class="keyword">this</span>;
+        <span class="built_in">console</span>.log($<span class="keyword">this</span>.name);
     }
 }
-f4(<span class="number">1</span>,<span class="number">2</span>);<span class="comment">//实参形参个数不同</span>
-f4(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);<span class="comment">//实参形参个数相同</span>
-</code></pre><p>还有其他功能，有待挖掘。</p>
+这样的话我们可以在创建对象之初限制对象的属性
+<span class="keyword">var</span> person1 = <span class="keyword">new</span> Person(<span class="string">'Zacarh'</span>,<span class="number">23</span>);<span class="comment">//这样会报错</span>
+但是有个弊端，程序员创建了符合规定的对象，但是他仍可以修改对象的属性成为不符合规则的值
+<span class="keyword">var</span> person2 = <span class="keyword">new</span> Person(<span class="string">'Tom'</span>,<span class="number">22</span>);<span class="comment">//成功创建</span>
+person2.name = <span class="string">'Zacarh'</span>;<span class="comment">//成功修改为不符合规则的值</span>
+<span class="built_in">console</span>.log(person2.name);<span class="comment">//Zacarh</span>
 
+于是就有了私有变量的由来,我们采用闭包模拟私有变量
+<span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>)</span>{
+    <span class="keyword">var</span> name,age;<span class="comment">//这里的变量外部访问不到，可以看成私有变量</span>
+    <span class="keyword">this</span>.setName=<span class="function"><span class="keyword">function</span>(<span class="params">nameAgrument</span>)</span>{<span class="comment">//这个是特权方法，可以访问私有变量</span>
+        <span class="keyword">if</span>(nameAgrument.length&gt;<span class="number">4</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'name too long'</span>);
+        name = nameAgrument;<span class="comment">//特权方法内却可以访问到外部变量。js函数作用域是在定义的时候确定的，不是在执行的时候确定的</span>
+    };
+    <span class="keyword">this</span>.say = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+        <span class="built_in">console</span>.log(name);<span class="comment">//这里就不用this.name了</span>
+    }
+}
+<span class="keyword">var</span> person1 = <span class="keyword">new</span> Person();
+<span class="comment">// person1.setName('Zacarh');//报错，字符长度大于4</span>
+person1.setName(<span class="string">'Tom'</span>);<span class="comment">//可以</span>
+person1.say();<span class="comment">//输出Tom，而且此时你无法直接更改name的值了，必须要通过setName函数才可以。</span>
+
+上面那种做法的弊端就是，每创建一个函数，特权函数也会创建一次，这样会耗费更多的内存，不像用prototype那样所有对象共用prototype上面的方法。
+</code></pre>
       
     </div>
     
@@ -276,18 +294,9 @@ f4(<span class="number">1</span>,<span class="number">2</span>,<span class="numb
     
 <nav id="article-nav">
   
-    <a href="/2015/11/23/经验分享-网页动效之CSS篇/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          经验分享-网页动效之CSS篇
-        
-      </div>
-    </a>
   
-  
-    <a href="/2015/11/10/git常用命令/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">git常用命令</div>
+    <a href="/2015/11/23/经验分享-网页动效之CSS篇/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">经验分享-网页动效之CSS篇</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -316,7 +325,7 @@ f4(<span class="number">1</span>,<span class="number">2</span>,<span class="numb
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="arguments中的callee与caller" data-title="arguments中的caller与callee" data-url="https://github.com/Hx2heng/2015/11/16/arguments中的callee与caller/"></div>
+	<div class="ds-thread" data-thread-key="js设计模式-模拟私有变量" data-title="js设计模式-模拟私有变量" data-url="https://github.com/Hx2heng/2016/01/14/js设计模式-模拟私有变量/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
