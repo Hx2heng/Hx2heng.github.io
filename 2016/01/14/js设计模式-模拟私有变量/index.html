@@ -29,7 +29,7 @@ Person.prototype={
         return this;
     },
     say:function(wo">
-<meta property="og:updated_time" content="2016-01-14T08:19:18.000Z">
+<meta property="og:updated_time" content="2016-01-14T08:24:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="js设计模式-模拟私有变量">
 <meta name="twitter:description" content="//假设有一个人的类,一般的写法：                       
@@ -271,9 +271,9 @@ person2.name = <span class="string">'Zacarh'</span>;<span class="comment">//成�
 <span class="comment">//于是就有了私有变量的由来,我们采用闭包模拟私有变量</span>
 <span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>)</span>{
     <span class="keyword">var</span> name,age;<span class="comment">//这里的变量外部访问不到，可以看成私有变量</span>
-    <span class="keyword">this</span>.setName=<span class="function"><span class="keyword">function</span>(<span class="params">nameAgrument</span>)</span>{<span class="comment">//这个是特权方法，可以访问私有变量</span>
-        <span class="keyword">if</span>(nameAgrument.length&gt;<span class="number">4</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'name too long'</span>);
-        name = nameAgrument;<span class="comment">//特权方法内却可以访问到外部变量。js函数作用域是在定义的时候确定的，不是在执行的时候确定的</span>
+    <span class="keyword">this</span>.setName=<span class="function"><span class="keyword">function</span>(<span class="params">nameArgument</span>)</span>{<span class="comment">//这个是特权方法，可以访问私有变量</span>
+        <span class="keyword">if</span>(nameArgument.length&gt;<span class="number">4</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'name too long'</span>);
+        name = nameArgument;<span class="comment">//特权方法内却可以访问到外部变量。js函数作用域是在定义的时候确定的，不是在执行的时候确定的</span>
     };
     <span class="keyword">this</span>.say = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
         <span class="built_in">console</span>.log(name);<span class="comment">//这里就不用this.name了</span>
