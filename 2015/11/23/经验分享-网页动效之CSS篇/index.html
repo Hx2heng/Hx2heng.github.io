@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://github.com/Hx2heng/2015/11/23/经验分享-网页动效之CSS篇/index.html">
 <meta property="og:site_name" content="Hx2的博客">
 <meta property="og:description" content="网页动效之CSS篇在网页中实现动画效果有很多种方式，例如由js控制的canvas、svg、elements动画，还有由css3控制的svg和elements动画等（还有flash？）。css实现elements动画主要通过transition（过渡效果）和animation（动画）来控制。其中animation通过其强大的函数自定义化和丰富的控制接口以及css3与生俱来的流畅高速渲染效果，成为了动">
-<meta property="og:updated_time" content="2015-11-30T09:40:20.267Z">
+<meta property="og:updated_time" content="2016-11-15T08:24:01.470Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="经验分享-网页动效之CSS篇">
 <meta name="twitter:description" content="网页动效之CSS篇在网页中实现动画效果有很多种方式，例如由js控制的canvas、svg、elements动画，还有由css3控制的svg和elements动画等（还有flash？）。css实现elements动画主要通过transition（过渡效果）和animation（动画）来控制。其中animation通过其强大的函数自定义化和丰富的控制接口以及css3与生俱来的流畅高速渲染效果，成为了动">
@@ -217,11 +217,12 @@
 </blockquote>
 <p>当我们给ele-wrap 加上playing（例如通过点击事件添加）的时候，这个时候ele就会动起来。</p>
 <p>通过这种方法，我们能更加方便清晰地控制某些区域下元素的动画开始执行时刻。</p>
-<h2 id="Tips2:叠加动画">Tips2:叠加动画</h2><p>animation 是支持叠加动画的写法的，但是只能是两种叠加，看代码</p>
+<h2 id="Tips2:叠加动画">Tips2:叠加动画</h2><p>animation 是支持叠加动画的写法的，看代码</p>
 <blockquote>
 <p> .ele{animation:fadeIn 1s,sildeLeft 1s}</p>
 </blockquote>
 <p>这个写法的意思是让元素渐显同时向左移动。</p>
+<p>这里有一点要注意的是，如果后面的动画改变的元素属性和前面的动画一样的话，那么前面动画的属性改变就失效了。</p>
 <blockquote>
 <p> .ele{animation:fadeIn 1s,sildeLeft 1s,sildeUp 1s}</p>
 </blockquote>
@@ -232,8 +233,6 @@
 <p>  .ele-wrap{animation:fadeIn 1s}</p>
 <p>  .ele-warp .ele{animation:slideLeft 1s}</p>
 </blockquote>
-<p>这种就不是只能加两种叠加动画了;)。</p>
-<p>要根据具体的情况采用不同的方法。</p>
 <h2 id="Tips3:连接动画">Tips3:连接动画</h2><p>通过animaiton的animation-delay可以实现动画连接。比如上个例子我们不要两个动画同时进行，我们想元素渐显后再向左移动，那么我们可以这样写：</p>
 <blockquote>
 <p>  .ele{animation:fadeIn 1s,sildeLeft 1s 1s}</p>
