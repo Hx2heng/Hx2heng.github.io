@@ -170,8 +170,8 @@
     <article id="post-es6+express+ejs+webpack+sass+mongoDB" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/11/23/es6+express+ejs+webpack+sass+mongoDB/" class="article-date">
-  	<time datetime="2016-11-23T02:28:29.000Z" itemprop="datePublished">2016-11-23</time>
+      <a href="/2017/02/23/es6+express+ejs+webpack+sass+mongoDB/" class="article-date">
+  	<time datetime="2017-02-23T02:28:29.000Z" itemprop="datePublished">2017-02-23</time>
 </a>
     </div>
   
@@ -184,7 +184,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/23/es6+express+ejs+webpack+sass+mongoDB/">es6+express+ejs+webpack+sass+mongoDB 部署</a>
+      <a class="article-title" href="/2017/02/23/es6+express+ejs+webpack+sass+mongoDB/">es6+express+ejs+webpack+sass+mongoDB 部署</a>
     </h1>
   
 
@@ -193,15 +193,104 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="项目目录">项目目录</h2><pre><code><span class="comment">--root</span>
-|<span class="comment">--config                //配置文件</span>
-|<span class="comment">--middlewares                //中间件</span>
-|<span class="comment">--pubulic                //静态资源</span>
-    |<span class="comment">--js</span>
-    |<span class="comment">--css/sass</span>
-    |<span class="comment">--images</span>
-|<span class="comment">--router                //路由控制器</span>
-|<span class="comment">--tools                //工具</span>
+        <p>项目地址：<a href="https://github.com/Hx2heng/blogDemo">es6+express+ejs+webpack+sass+mongoDB</a></p>
+<h2 id="项目目录">项目目录</h2><pre><code><span class="comment">--root</span>
+    |<span class="comment">--config                //配置文件</span>
+    |<span class="comment">--middlewares            //中间件</span>
+    |<span class="comment">--pubulic                //静态资源</span>
+     |<span class="comment">--js</span>
+     |<span class="comment">--css/sass</span>
+     |<span class="comment">--images</span>
+    |<span class="comment">--router                //路由控制器</span>
+    |<span class="comment">--tools                //工具</span>
+    |<span class="comment">--views                //视图文件</span>
+    |<span class="comment">--package.json</span>
+    |<span class="comment">--...</span>
+</code></pre><h2 id="es6预设置">es6预设置</h2><p>使用babel对es6进行转换：</p>
+<p>下载</p>
+<pre><code> <span class="string">"devDependencies"</span>: {
+<span class="string">"babel"</span>: <span class="string">"6.23.0"</span>,
+<span class="string">"babel-cli"</span>: <span class="string">"6.23.0"</span>,
+<span class="string">"babel-core"</span>: <span class="string">"6.23.1"</span>,
+<span class="string">"babel-loader"</span>: <span class="string">"6.4.0"</span>,<span class="comment">//webpack的babel-loader</span>
+<span class="string">"babel-plugin-transform-es2015-modules-commonjs"</span>: <span class="string">"6.23.0"</span>,<span class="comment">//允许使用es6的modules</span>
+<span class="string">"babel-preset-env"</span>: <span class="string">"1.2.1"</span>,
+<span class="string">"babel-preset-react"</span>: <span class="string">"6.23.0"</span>,<span class="comment">//支持jsx转换</span>
+<span class="string">"babel-preset-stage-0"</span>: <span class="string">"6.22.0"</span>
+}
+</code></pre><p>配置可以不写在.babelrc里，直接写在package.json</p>
+<pre><code> <span class="string">"babel"</span>: {
+<span class="string">"presets"</span>: [
+  <span class="string">"react"</span>,
+  <span class="string">"stage-0"</span>
+],
+<span class="string">"plugins"</span>: [
+  <span class="string">"transform-es2015-modules-commonjs"</span>
+]
+}
+</code></pre><p>npm script直接运行babel-node</p>
+<pre><code><span class="string">"scripts"</span>: {
+<span class="string">"test"</span>: <span class="string">"echo \"</span><span class="keyword">Error</span>: <span class="keyword">no</span> <span class="keyword">test</span> specified\<span class="string">" &amp;&amp; exit 1"</span>,
+<span class="string">"start"</span>: <span class="string">"babel-node tools/start"</span>,<span class="comment">//表示执行tools文件夹的start文件，执行之前进行es6转码</span>
+<span class="string">"dev"</span>: <span class="string">"supervisor -w tools,router,middlewares,config,views -- -r babel-register tools/dev"</span>
+}
+</code></pre><h2 id="es6_-_异步操作_async/await_语法">es6 - 异步操作 async/await 语法</h2><p>async函数允许你像同步写法那样去写异步操作，async函数里面关键字await后面接一个Promise，此时函数执行会在await后的Promise执行完成后才会往下执行。</p>
+<p>举个例子，创建服务器是异步操作，我们需要在服务器创建完成后才布置路由。首先创建服务器，并把它包在Promise里面：</p>
+<pre><code>let runServer = <span class="function"><span class="params">(app)</span>=&gt;</span>{
+    <span class="keyword">return</span> <span class="keyword">new</span> Promise(resolve=&gt;{
+        var server = app.listen(<span class="string">'3000'</span>,<span class="function"><span class="params">()</span>=&gt;</span>{
+            var host = server.address().address;
+              var port = server.address().port;
+            <span class="built_in">console</span>.log(<span class="string">'server running at http://%s:%s'</span>, host, port);
+            resolve();
+        })
+    }) 
+} 
+</code></pre><p>然后在主体事件中，写异步操作：</p>
+<pre><code> <span class="keyword">let</span> appPro = <span class="keyword">async</span> ()=&gt;{
+    <span class="keyword">let</span> app = express();
+    <span class="comment">//等待启动服务 </span>
+    <span class="keyword">await</span> runServer(app);
+    <span class="comment">//启动路由</span>
+    router(app);
+}
+</code></pre><p>此时，路由 router() 会在服务器创建完成后执行。</p>
+<h2 id="express_将session_存入Redis">express 将session 存入Redis</h2><pre><code><span class="keyword">import</span> session <span class="keyword">from</span> <span class="string">'express-session'</span>;
+<span class="keyword">import</span> connectRedis <span class="keyword">from</span> <span class="string">'connect-redis'</span>;
+
+<span class="keyword">let</span> sessionCfg = {
+    secret:<span class="string">'huangxinzheng'</span>,
+    resave:<span class="literal">true</span>,<span class="comment">//即使 session 没有被修改，也保存 session 值，默认为 true（！不添加报错,下同）</span>
+    saveUninitialized: <span class="literal">false</span>,<span class="comment">// 设置为 false，强制创建一个 session，即使用户未登录</span>
+    cookie: {
+        maxAge: <span class="number">1000</span>*<span class="number">60</span>*<span class="number">60</span>*<span class="number">24</span><span class="comment">// 过期时间，过期后 cookie 中的 session id 自动删除</span>
+    }
+}
+
+ <span class="comment">//设置session,将session存在 Redis 中</span>
+<span class="keyword">var</span> RedisStore = connectRedis(session);
+<span class="keyword">let</span> rs = <span class="keyword">new</span> RedisStore();
+app.use(session(extend(<span class="literal">true</span>,{},serverCfg,rs)));
+</code></pre><h2 id="express_中间件的使用">express 中间件的使用</h2><p>express的中间件很重要，甚至可以说express就是通过中间来实现应用的。express有很多开源中间件可以给我们下载使用（比如express-session）。把中间件放进app.use()里就代表每次服务器请求都会经过这个中间件（假设中间件没有停止下一个的情况下）。我们也可以自己写中间件，其实中间件就是一个函数，这个函数有<code>req</code>，<code>res</code>，<code>next</code> 三个参数，分别代表请求对象，响应对象，和next方法。执行next方法可过渡当前中间件。</p>
+<p>写一个记录访问次数的中间件，配合session记录一天内用户的访问次数：</p>
+<pre><code>let showReqTimes = (req,res,<span class="keyword">next</span>) =&gt;{
+<span class="keyword">if</span>(!req.session.reqTimes){
+    req.session.reqTimes =<span class="number">1</span><span class="comment">;</span>
+    res.<span class="built_in">send</span>(<span class="string">'你第1次访问了本网站'</span>)<span class="comment">;</span>
+}<span class="keyword">else</span>{
+    req.session.reqTimes++<span class="comment">;</span>
+    res.<span class="built_in">send</span>(<span class="string">'&lt;p&gt;你第'</span>+req.session.reqTimes+<span class="string">'次访问了本网站&lt;/p&gt;'</span>)<span class="comment">;</span>
+}
+
+<span class="keyword">next</span>()<span class="comment">;//执行下一个中间件</span>
+}
+
+export <span class="keyword">default</span> showReqTimes
+</code></pre><p>假设是记录在访问’/‘的时候：</p>
+<pre><code><span class="literal">import</span> showReqTimes  from <span class="string">'./showReqTimes.js'</span>
+app.<span class="literal">get</span>(<span class="string">'/'</span>, showReqTimes, (req, res) =&gt; {<span class="comment">//此时每次访问根目录之后都会进入showReqTimes这个中间件</span>
+    <span class="comment">//do something..</span>
+})
 </code></pre>
       
     </div>
