@@ -105,7 +105,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/JS/" style="font-size: 15px;">JS</a> <a href="/tags/前端/" style="font-size: 20px;">前端</a> <a href="/tags/叽里呱啦/" style="font-size: 10px;">叽里呱啦</a> <a href="/tags/技术/" style="font-size: 20px;">技术</a> <a href="/tags/生活/" style="font-size: 10px;">生活</a>
+						<a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/JS/" style="font-size: 15px;">JS</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/前端/" style="font-size: 20px;">前端</a> <a href="/tags/叽里呱啦/" style="font-size: 10px;">叽里呱啦</a> <a href="/tags/技术/" style="font-size: 20px;">技术</a> <a href="/tags/生活/" style="font-size: 10px;">生活</a>
 					</div>
 				</section>
 				
@@ -392,6 +392,137 @@ bundler.plugin(<span class="string">'done'</span>, () =&gt; handleBundleComplete
       
 	<div class="article-tag tagcloud">
 		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JS/">JS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端/">前端</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
+    <article id="post-webpack实现HMR热加载" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/01/11/webpack实现HMR热加载/" class="article-date">
+  	<time datetime="2017-01-11T06:38:54.000Z" itemprop="datePublished">2017-01-11</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/11/webpack实现HMR热加载/">webpack实现HMR热加载</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>“热模块替换”(HMR)是在某个功能活动运行时注入更新的模块。</p>
+<pre><code>就像对每一个模块进行LiveReload
+</code></pre><p>也就是说，在开发过程中，我们不用刷新页面，就能实现局部的更新，无论是css代码，还是js代码。</p>
+<h2 id="webpack实现HMR热加载">webpack实现HMR热加载</h2><p>实现webpack HMR需要通过webpack的两个中间件，即<code>webpack-dev-middleware</code>和<code>webpack-hot-middleware</code>。</p>
+<p><strong><a href="https://github.com/webpack/webpack-dev-middleware">webpack-dev-middleware</a></strong>是什么：</p>
+<blockquote>
+<p>The webpack-dev-middleware is a small middleware for a connect-based middleware stack. It uses webpack to compile assets in-memory and serve them. When a compilation is running every request to the served webpack assets is blocked until we have a stable bundle.</p>
+</blockquote>
+<p>可以看出<code>webpack-dev-middleware</code>是一个中间件，负责把webpack打包的bundle<strong>生成在内存中，而不在磁盘里</strong>，而且在其生成稳定的包之前，<strong>编译将被阻塞</strong>（使网页更新有貌似网络延迟的效果），如此一来我们就不需要去关心编译是否完成了。</p>
+<p><strong><a href="https://github.com/glenjamin/webpack-hot-middleware">webpack-hot-middleware</a></strong>是什么：</p>
+<blockquote>
+<p>This module is only concerned with the mechanisms to connect a browser client to a webpack server &amp; receive updates. It will subscribe to changes from the server and execute those changes using webpack’s HMR API. Actually making your application capable of using hot reloading to make seamless changes is out of scope, and usually handled by another library.</p>
+</blockquote>
+<p><code>webpack-dev-middleware</code>用来在浏览器客户端和webpack服务端进行连接，监听服务端改变的文件，然后<br>实现浏览器客户端的热加载。</p>
+<hr>
+<p>我写了个 <a href="https://github.com/Hx2heng/Webpack-HMR-demo">例子</a> 简单实现了HMR。</p>
+<p>首先，先安装npm模块（这里我们用express作为服务器）：</p>
+<pre><code>npm i express webpack webpack-<span class="built_in">dev</span>-middleware webpack-hot-middleware --<span class="built_in">save</span>-<span class="built_in">dev</span>
+</code></pre><p>然后，编写webpack.config.js:</p>
+<pre><code><span class="comment">//增加三个插件，并在入口文件后增加一段代码</span>
+<span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>),
+    webpack =<span class="built_in">require</span>(<span class="string">'webpack'</span>);
+<span class="keyword">var</span> config = {
+    entry: 
+    [<span class="string">"./src/a.js"</span>,
+    <span class="string">'webpack-hot-middleware/client?path=/__webpack_hmr&amp;timeout=20000'</span>,
+    ],
+    output: {
+        path: path.resolve(__dirname, <span class="string">'./output/'</span>),
+        filename:<span class="string">'bundle.js'</span>,
+    },
+    plugins: [
+        <span class="keyword">new</span> webpack.optimize.OccurrenceOrderPlugin(),
+        <span class="keyword">new</span> webpack.HotModuleReplacementPlugin(),
+        <span class="keyword">new</span> webpack.NoEmitOnErrorsPlugin()
+    ]
+}
+
+<span class="built_in">module</span>.exports = config;
+</code></pre><p>然后给express配置中间件:</p>
+<pre><code><span class="keyword">var</span> express = <span class="keyword">require</span>(<span class="string">'express'</span>),
+    app = express(),
+    webpack = <span class="keyword">require</span>(<span class="string">'webpack'</span>),
+    config = <span class="keyword">require</span>(<span class="string">'./webpack.config.js'</span>),
+    webpackDevMiddleware = <span class="keyword">require</span>(<span class="string">'webpack-dev-middleware'</span>),
+    webpackHotMiddleware = <span class="keyword">require</span>(<span class="string">'webpack-hot-middleware'</span>);
+
+
+<span class="comment">//如果有回调函数并且没有中间件插件则直接运行webpack。如果没有回调函数或没有中间件插件则不直接执行webpack。</span>
+<span class="keyword">var</span> compiler = webpack(config, <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+    console.log(<span class="string">'done'</span>)
+}); 
+
+<span class="comment">/*这里设置bundle生成位置，注意是生成在内存中，由于我们设置了静态目录'output'，
+所以这里实际上的网络位置是localhost:8080/，文件位置是 根目录/output */</span>
+<span class="keyword">var</span> options = {
+    publicPath: <span class="string">"/"</span>,
+}
+
+app.<span class="keyword">use</span>(webpackDevMiddleware(compiler, options));
+app.<span class="keyword">use</span>(webpackHotMiddleware(compiler));
+app.<span class="keyword">use</span>(express.<span class="keyword">static</span>(<span class="string">'output'</span>))
+app.listen(<span class="number">8080</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+    console.log(<span class="string">'Example app listening on!'</span>)
+})
+</code></pre><p>最后在需要热加载的文件下加入（案例中是a.js）：</p>
+<pre><code><span class="keyword">if</span> (<span class="class"><span class="keyword">module</span>.<span class="title">hot</span>) {</span>
+    <span class="class"><span class="keyword">module</span>.<span class="title">hot</span>.<span class="title">accept</span>();</span>
+}
+</code></pre><p>准备就绪，运行：</p>
+<pre><code><span class="built_in">npm</span> start
+</code></pre><p>浏览器打开<code>localhost:8080</code> ，会看到控制台输出</p>
+<blockquote>
+<p>[HMR] connected</p>
+</blockquote>
+<p>代表热加载连接成了！ </p>
+<p>我们点击按钮，弹出1。此时我们尝试修改b.js，把<code>alert(1)</code>改为<code>alert(2)</code>，回到浏览器，发现浏览器并没有刷新，再次点击按钮，弹出了2！浏览器在不刷新的情况下，更新了js文件！</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/">js</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端/">前端</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
 	</div>
 
       
@@ -1485,61 +1616,10 @@ git branch --set-upstream <span class="keyword">master</span> <span class="title
 
 
   
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
   
-    <div class="article-meta">
-      <a href="/2015/11/04/hello-world/" class="article-date">
-  	<time datetime="2015-11-04T09:25:11.000Z" itemprop="datePublished">2015-11-04</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/04/hello-world/">hello world</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>hi,</p>
-<p>折腾了半天，终于把hexo部署到github了。期间遇到了很多问题，明天有空再梳理一下发上来。</p>
-<p>有一个自己的空间，这种感觉挺好的。</p>
-<p>还有谢谢litten的主题，我很喜欢。</p>
-<p>Ok,that is all.</p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
   
 </div>
       <footer id="footer">
