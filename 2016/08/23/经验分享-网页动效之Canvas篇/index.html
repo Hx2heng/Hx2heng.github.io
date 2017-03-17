@@ -5,16 +5,27 @@
   
   <title>经验分享-网页动效之Canvas篇 | Hx2的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="maybe..or">
+  <meta name="description" content="在处理多元素动效的时候用操作DOM的方法会严重占用内存，拖慢运行速度，所以应该用Canvas画布制作多元素的动效或者游戏。
+Canvas是HTML5的新标签。用于绘制图像（通过脚本，通常是 JavaScript），不过，canvas元素本身并没有绘制能力（它仅仅是图形的容器）。
+Canvas提供的功能更原始，适合像素处理，动态渲染和大数据量绘制。
+我写了一个弹弓射鸟的游戏，用的是JavaScrip">
 <meta property="og:type" content="article">
 <meta property="og:title" content="经验分享-网页动效之Canvas篇">
 <meta property="og:url" content="https://github.com/Hx2heng/2016/08/23/经验分享-网页动效之Canvas篇/index.html">
 <meta property="og:site_name" content="Hx2的博客">
-<meta property="og:description" content="maybe..or">
-<meta property="og:updated_time" content="2016-11-15T08:37:53.720Z">
+<meta property="og:description" content="在处理多元素动效的时候用操作DOM的方法会严重占用内存，拖慢运行速度，所以应该用Canvas画布制作多元素的动效或者游戏。
+Canvas是HTML5的新标签。用于绘制图像（通过脚本，通常是 JavaScript），不过，canvas元素本身并没有绘制能力（它仅仅是图形的容器）。
+Canvas提供的功能更原始，适合像素处理，动态渲染和大数据量绘制。
+我写了一个弹弓射鸟的游戏，用的是JavaScrip">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hx2heng/SlingShot/master/images/code.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hx2heng/SlingShot/master/images/show.jpg">
+<meta property="og:updated_time" content="2017-03-17T06:53:47.789Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="经验分享-网页动效之Canvas篇">
-<meta name="twitter:description" content="maybe..or">
+<meta name="twitter:description" content="在处理多元素动效的时候用操作DOM的方法会严重占用内存，拖慢运行速度，所以应该用Canvas画布制作多元素的动效或者游戏。
+Canvas是HTML5的新标签。用于绘制图像（通过脚本，通常是 JavaScript），不过，canvas元素本身并没有绘制能力（它仅仅是图形的容器）。
+Canvas提供的功能更原始，适合像素处理，动态渲染和大数据量绘制。
+我写了一个弹弓射鸟的游戏，用的是JavaScrip">
   
     <link rel="alternative" href="/atom.xml" title="Hx2的博客" type="application/atom+xml">
   
@@ -203,7 +214,34 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>在处理多元素动效的时候用操作DOM的方法会严重占用内存，拖慢运行速度，所以应该用Canvas画布制作多元素的动效或者游戏。</p>
+<p>Canvas是HTML5的新标签。用于绘制图像（通过脚本，通常是 JavaScript），不过，canvas元素本身并没有绘制能力（它仅仅是图形的容器）。</p>
+<p>Canvas提供的功能更原始，适合像素处理，动态渲染和大数据量绘制。</p>
+<p>我写了一个弹弓射鸟的游戏，用的是JavaScript+Canvas，里面包含大部分Canvas的用法，以及面向对象的JavaScript写法：</p>
+<p><img src="https://raw.githubusercontent.com/Hx2heng/SlingShot/master/images/code.png" alt=""></p>
+<p>（手机扫一扫查看demo，我只写了touch事件，所以只能在手机上玩，或者电脑开发者模式模拟手机。）</p>
+<p>项目 <a href="https://github.com/Hx2heng/SlingShot">源码地址</a></p>
+<hr>
+<p>该游戏优化过，即使出现超大量的元素也不会卡：</p>
+<p><img src="https://raw.githubusercontent.com/Hx2heng/SlingShot/master/images/show.jpg" alt=""></p>
+<p>优化通过删除冗余对象、去除setInterval改为requestAnimationFrame作为定时器、还有就是规范的游戏的开发模式。</p>
+<hr>
+<p>requestAnimationFrame作为定时器：</p>
+<pre><code>interval: <span class="keyword">function</span>() {
+     var <span class="variable">$this</span> = this;
+     this.timer = requestAnimationFrame(function() {
+         <span class="variable">$this</span>.render();
+         //游戏时间用完结束
+         if (<span class="variable">$this</span>.usedTime &lt; <span class="variable">$this</span>.time) {
+              <span class="variable">$this</span>.timer = requestAnimationFrame(arguments.callee);
+         } else {
+              <span class="variable">$this</span>.over();
+         }
+     });
+}
+</code></pre><hr>
+<p>只要学会了这个，并能自己亲手写出一个这样的游戏，那么你的canvas就可以了。</p>
+
       
     </div>
     
