@@ -25,7 +25,7 @@
      |--js
      |--css/sass
      |--im">
-<meta property="og:updated_time" content="2017-03-17T05:34:47.281Z">
+<meta property="og:updated_time" content="2017-03-17T05:52:59.033Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="es6+express+ejs+webpack+sass+mongoDB 部署">
 <meta name="twitter:description" content="项目地址：es6+express+ejs+webpack+sass+mongoDB
@@ -234,7 +234,10 @@
      |<span class="comment">--images</span>
     |<span class="comment">--router                //路由控制器</span>
     |<span class="comment">--tools                //工具</span>
+     |<span class="comment">--lib</span>
+     |<span class="comment">--webpack.config.js</span>
     |<span class="comment">--views                //视图文件</span>
+     |<span class="comment">--components</span>
     |<span class="comment">--package.json</span>
     |<span class="comment">--...</span>
 </code></pre><h2 id="es6预设置">es6预设置</h2><p>使用babel对es6进行转换：</p>
@@ -322,7 +325,23 @@ export <span class="keyword">default</span> showReqTimes
 app.<span class="literal">get</span>(<span class="string">'/'</span>, showReqTimes, (req, res) =&gt; {<span class="comment">//此时每次访问根目录之后都会进入showReqTimes这个中间件</span>
     <span class="comment">//do something..</span>
 })
-</code></pre><h2 id="问题&amp;解决">问题&amp;解决</h2><h4 id="1-_supervisor_监听_es6_文件">1. supervisor 监听 es6 文件</h4><p>supervisor 默认监听不经过处理的js文件，所如果是直接监听es6语法的js文件，那么会出现语法错。</p>
+</code></pre><h2 id="webpack新版本的写法变化-Loader">webpack新版本的写法变化-Loader</h2><p>webpack2.2较上一代在语法方面有了变化，特别是loader：</p>
+<pre><code>原先写法:
+<span class="tag">module</span>: <span class="rules">{
+    <span class="rule"><span class="attribute">loaders</span>:<span class="value"> [{
+        test: /\.css$/,
+        loader: <span class="string">'style!css'</span>
+    </span></span></span>}]
+}
+现在写法：
+ <span class="tag">module</span>: <span class="rules">{
+    <span class="rule"><span class="attribute">rules</span>:<span class="value"> [{
+        test: /\.css$/,
+        use: [ <span class="string">'style-loader'</span>, <span class="string">'css-loader'</span>]
+    </span></span></span>}]
+}
+</code></pre><p>loaders改为了rules，loader改为了use。语义上更加容易理解了，“对不同的文件类型使用不同的规则”。webpack 虽好，但是配置的时候很麻烦，更新了新版本之后，写法不习惯，报错也是莫名其妙。开发的要一边看官方文档，花了很多时间，看来要多花点时间去适应。</p>
+<h2 id="问题&amp;解决">问题&amp;解决</h2><h4 id="1-_supervisor_监听_es6_文件">1. supervisor 监听 es6 文件</h4><p>supervisor 默认监听不经过处理的js文件，所如果是直接监听es6语法的js文件，那么会出现语法错。</p>
 <p>所以，采用<code>babel-register</code>对es6文件进行预转换，并且设置<code>supervisor</code>：</p>
 <pre><code>supervisor -w tools,router <span class="comment">-- -r babel-register tools/start</span>
 </code></pre><p><code>supervisor</code>的官方文档可参见 :<a href="https://www.npmjs.com/package/supervisor" target="_blank" rel="external"> https://www.npmjs.com/package/supervisor</a></p>
