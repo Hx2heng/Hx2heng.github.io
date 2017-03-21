@@ -167,6 +167,177 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-webpack与bootstrap的配合方案" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/02/24/webpack与bootstrap的配合方案/" class="article-date">
+  	<time datetime="2017-02-23T17:18:34.000Z" itemprop="datePublished">2017-02-24</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/24/webpack与bootstrap的配合方案/">通过webpack使用自定义bootstrap解决方案</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="如何更好地使用自定义的Bootstrap？">如何更好地使用自定义的Bootstrap？</h3><p>bootstrap官网提供自定义版本的下载，用户只要选择需要的组件就能下载对应的版本。但是，这种做法实在是太繁琐了。而且如果我们想要方便选择所需组件，又想通过sass/less修改bootstrap，要通过什么方式？答案就是’bootstrap-loader’（这个是对应修改sass的，本文只讲sass，还有个对应less的，叫’bootstrap-webpack’）。</p>
+<h3 id="bootstrap-loader的使用">bootstrap-loader的使用</h3><p>bootstrap-loader ，从名字上看得出他是一个加载器，配合webpack使用的。它能使页面引用到自定义版本的bootstrap。</p>
+<p>###1.安装</p>
+<p>安装’bootstrap-loader’</p>
+<pre><code>npm <span class="keyword">install</span> bootstrap-loader
+</code></pre><p>安装所需依赖：</p>
+<pre><code>npm install --save-dev bootstrap-sass
+npm install --save-dev css-loader <span class="keyword">node</span><span class="identifier"></span><span class="title">-sass</span> resolve-url-loader sass-loader style-loader url-loader
+</code></pre><p>你有可能还需要安装：</p>
+<pre><code>npm install --<span class="built_in">save</span>-<span class="built_in">dev</span> imports-loader exports-loader
+npm install --<span class="built_in">save</span>-<span class="built_in">dev</span> postcss-loader        
+</code></pre><p>###2.使用<br>1.简单使用方法：</p>
+<pre><code><span class="keyword">import</span> <span class="string">'bootstrap-loader'</span>
+</code></pre><p>此时会引用到完整的bootstrap。</p>
+<p>注：bootstrap引用了诸如svg、ttf等文件，所以也需要在webpack.config.js配置好对应的加载器：</p>
+<pre><code><span class="rules">{ <span class="rule"><span class="attribute">test</span>:<span class="value"> /\.scss$/, use: [<span class="string">'style-loader'</span>, <span class="string">'css-loader'</span>, <span class="string">'postcss-loader'</span>, <span class="string">'sass-loader'</span>] </span></span></span>},
+<span class="rules">{ <span class="rule"><span class="attribute">test</span>:<span class="value"> /\.css$/, use: [<span class="string">'style-loader'</span>, <span class="string">'css-loader'</span>, <span class="string">'postcss-loader'</span>] </span></span></span>},
+<span class="rules">{
+<span class="rule"><span class="attribute">test</span>:<span class="value"> /\.woff2?(\?v=[<span class="number">0</span>-<span class="number">9</span>]\.[<span class="number">0</span>-<span class="number">9</span>]\.[<span class="number">0</span>-<span class="number">9</span>])?$/,
+use: <span class="string">'url-loader?limit=10000'</span>,
+</span></span></span>},
+<span class="rules">{
+<span class="rule"><span class="attribute">test</span>:<span class="value"> /\.(ttf|eot|svg)(\?[\s\S]+)?$/,
+use: <span class="string">'file-loader'</span>,
+</span></span></span>}
+</code></pre><p>2.可自定义版：</p>
+<p>首先在入口文件前面加载’bootstrap-loader’（此时不用在index.js里写<code>import &#39;bootstrap-loader&#39;</code>）:</p>
+<pre><code><span class="tag">entry</span>: {
+    <span class="attribute">index</span>: [<span class="string">'bootstrap-loader'</span>, <span class="string">'./index.js'</span>],<span class="comment">//webpack数组形式入口文件以数组最后一个作为出口文件</span>
+    <span class="attribute">test</span>: <span class="string">'./test.js'</span>,
+},
+</code></pre><p>然后在根目录添加.bootstraprc文件，即是bootstrap自定义配置文件，文件可以用yml或者json格式编写自定义属性，完整案例(yml格式)：</p>
+<pre><code><span class="attribute">bootstrapVersion</span>: <span class="string">3</span>
+
+<span class="http"><span class="attribute">useCustomIconFontPath</span>: <span class="string">false</span>
+
+<span class="sqf">styleLoaders:
+  - style
+  - css
+  - sass
+
+extractStyles: <span class="literal">false</span>
+
+styles:
+
+  <span class="preprocessor"># Mixins</span>
+  mixins: <span class="literal">true</span>
+
+  <span class="preprocessor"># Reset and dependencies</span>
+  normalize: <span class="literal">true</span>
+  print: <span class="literal">true</span>
+  glyphicons: <span class="literal">true</span>
+
+  <span class="preprocessor"># Core CSS</span>
+  scaffolding: <span class="literal">true</span>
+  <span class="built_in">type</span>: <span class="literal">true</span>
+  code: <span class="literal">true</span>
+  grid: <span class="literal">true</span>
+  tables: <span class="literal">true</span>
+  forms: <span class="literal">true</span>
+  buttons: <span class="literal">true</span>
+
+  <span class="preprocessor"># Components</span>
+  component-animations: <span class="literal">true</span>
+  dropdowns: <span class="literal">true</span>
+  button-groups: <span class="literal">true</span>
+  input-groups: <span class="literal">true</span>
+  navs: <span class="literal">true</span>
+  navbar: <span class="literal">true</span>
+  breadcrumbs: <span class="literal">true</span>
+  pagination: <span class="literal">true</span>
+  pager: <span class="literal">true</span>
+  labels: <span class="literal">true</span>
+  badges: <span class="literal">true</span>
+  jumbotron: <span class="literal">true</span>
+  thumbnails: <span class="literal">true</span>
+  alerts: <span class="literal">true</span>
+  progress-bars: <span class="literal">true</span>
+  media: <span class="literal">true</span>
+  <span class="built_in">list</span>-<span class="built_in">group</span>: <span class="literal">true</span>
+  panels: <span class="literal">true</span>
+  wells: <span class="literal">true</span>
+  responsive-embed: <span class="literal">true</span>
+  close: <span class="literal">true</span>
+
+  <span class="preprocessor"># Components w/ JavaScript</span>
+  modals: <span class="literal">true</span>
+  tooltip: <span class="literal">true</span>
+  popovers: <span class="literal">true</span>
+  carousel: <span class="literal">true</span>
+
+  <span class="preprocessor"># Utility classes</span>
+  utilities: <span class="literal">true</span>
+  responsive-utilities: <span class="literal">true</span>
+
+<span class="preprocessor">### Bootstrap scripts</span>
+scripts:
+  transition: <span class="literal">true</span>
+  alert: <span class="literal">true</span>
+  button: <span class="literal">true</span>
+  carousel: <span class="literal">true</span>
+  collapse: <span class="literal">true</span>
+  dropdown: <span class="literal">true</span>
+  modal: <span class="literal">true</span>
+  tooltip: <span class="literal">true</span>
+  popover: <span class="literal">true</span>
+  scrollspy: <span class="literal">true</span>
+  tab: <span class="literal">true</span>
+  affix: <span class="literal">true</span></span></span>
+</code></pre><p>如果想给不同页面配置不用的.bootstraprc文件或者不想把.bootstraprc文件放在根目录，可以修改入口文件的bootstrap-loader的后缀:</p>
+<p>格式：<strong><code>bootstrap-loader/lib/bootstrap.loader?configFilePath=[文件位置]/[文件名字].[文件类型]!bootstrap-loader/no-op.js</code></strong></p>
+<p>eg:</p>
+<pre><code>entry: {
+    index: [`<span class="keyword">bootstrap</span>-loader/lib/<span class="keyword">bootstrap</span>.loader?configFilePath=<span class="label">${__dirname}</span>/.bootstraprc!<span class="keyword">bootstrap</span>-loader/<span class="keyword">no</span>-op.js`, './index.js'],
+    <span class="keyword">test</span>: './<span class="keyword">test</span>.js',
+},
+</code></pre><p>bootstrap-loader的官方源码：<a href="https://github.com/shakacode/bootstrap-loader">https://github.com/shakacode/bootstrap-loader</a>，上面会有更多解决方案。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JS/">JS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端/">前端</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
     <article id="post-es6+express+ejs+webpack+sass+mongoDB" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -1377,226 +1548,6 @@ git branch --set-upstream <span class="keyword">master</span> <span class="title
       
 	<div class="article-tag tagcloud">
 		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/叽里呱啦/">叽里呱啦</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/生活/">生活</a></li></ul>
-	</div>
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
-    <article id="post-把hexo部署到github" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/11/05/把hexo部署到github/" class="article-date">
-  	<time datetime="2015-11-05T01:11:16.000Z" itemprop="datePublished">2015-11-05</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/05/把hexo部署到github/">windows下把hexo部署到github</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="前言">前言</h1><p>hexo是一款基于Node.js的静态博客框架。目前在GitHub上已有1375 star 和 219 fork。把hexo部署到github上，这样就能免费使用github给我们提供的服务器和域名发布我们的博客了，是不是很爽。</p>
-<p>以下是windows系统中把hexo部署到github的具体操作方法。</p>
-<h1 id="步骤">步骤</h1><h2 id="1-_首先要下载nodejs">1. 首先要下载nodejs</h2><p>nodejs官网：</p>
-<p><a href="https://nodejs.org/en/" target="_blank" rel="external">https://nodejs.org/en/</a></p>
-<p>这个安装很简单，按常规软件那样安装就可以了。</p>
-<h2 id="2-_安装hexo">2. 安装hexo</h2><p>安装hexo也很简单。只需要打开<em>cmd控制台</em>，然后输入</p>
-<blockquote>
-<p>npm install hexo -g </p>
-</blockquote>
-<p>这句话的意思是把hexo安装到全局。（npm一般是安装nodejs时自带的了）</p>
-<p>如果想升级到最新版，还可以输入</p>
-<blockquote>
-<p>npm update hexo -g</p>
-</blockquote>
-<p>输入hexo可见hexo命令行：</p>
-<p><img src="http://i.imgur.com/GxhaCGA.jpg" alt=""></p>
-<p>附：<a href="http://segmentfault.com/a/1190000002632530?utm_source=tuicool&amp;utm_medium=referral" target="_blank" rel="external">hexo常用命令笔记</a></p>
-<p>（当然第一次安装的话你没有这么多可用的命令。等下你还需要安装的）</p>
-<h2 id="3-_安装git">3. 安装git</h2><p>关于git的学习，推荐<a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/00137396287703354d8c6c01c904c7d9ff056ae23da865a000" target="_blank" rel="external">廖雪峰的官方网站</a>。<br>引用文中的内容，windows安装git的方法：</p>
-<blockquote>
-<p>在Windows上安装Git,需要下载一个单独的exe安装程序，其他什么也不用装，绝对好用。</p>
-<p>msysgit是Windows版的Git，从<a href="http://msysgit.github.io/" target="_blank" rel="external">http://msysgit.github.io/</a>下载，然后按默认选项安装即可。</p>
-</blockquote>
-<h2 id="4-_初始化hexo">4. 初始化hexo</h2><p>在你喜欢的位置新建一个文件夹，我这边是E:/myBlog，<br>然后打开git-bash。<br>cd到文件夹所在位置：</p>
-<blockquote>
-<p>$ cd E:/myBlog</p>
-</blockquote>
-<p>以下操作都在此目录下。</p>
-<ul>
-<li>初始化hexo:<blockquote>
-<p>$ hexo init</p>
-</blockquote>
-</li>
-</ul>
-<p>输入后，你会发现文件夹中多了许多文件。主要目录如下：</p>
-<blockquote>
-<p>├── _config.yml  #站点配置文件</p>
-<p>├── package.json  #应用程序的信息</p>
-<p>├── scaffolds  #模板文件夹，博文是根据模板生成的</p>
-<p>├── source  #资源文件夹</p>
-<p>|   ├── _posts  #生成的博客</p>
-<p>└── themes  #下载的主题</p>
-</blockquote>
-<ul>
-<li><p>在此目录下安装npm</p>
-<blockquote>
-<p>$ npm install</p>
-</blockquote>
-</li>
-<li><p>生成静态文件</p>
-<blockquote>
-<p>$ hexo g</p>
-</blockquote>
-</li>
-<li><p>启动hexo服务</p>
-<blockquote>
-<p>$ hexo s</p>
-</blockquote>
-</li>
-</ul>
-<p>如果没有server命令？ ok，安装方法：</p>
-<blockquote>
-<p>$ npm install hexo-server –save</p>
-</blockquote>
-<p>安装成功，再<code>hexo s</code>一次,就会提示：</p>
-<p><img src="http://i.imgur.com/luZJFyN.jpg" alt=""></p>
-<p>恭喜，你现在可以打开浏览器输入<code>localhost:4000</code>查看你的博客了。出现hexo欢迎页面就代表成功了。</p>
-<p>到这里我们已经实现了把hexo部署到本地了。</p>
-<p>现在可以使用<code>$ hexo new &#39;your article&#39;</code> 发布你的新博文试试了。</p>
-<h2 id="（附加内容，引用其他主题）">（附加内容，引用其他主题）</h2><p>官方主题太官方，如何引用其他主题？</p>
-<p>安装主题的方法很简单,以litten的yilia主题为例子：</p>
-<blockquote>
-<p>$ git clone <a href="http://github.com/litten/hexo-theme-yilia.git">http://github.com/litten/hexo-theme-yilia.git</a> themes/yilia</p>
-</blockquote>
-<p>然后修改myBolg目录下的<code>_config.yml</code>文件。把<code>theme</code>后面的值修改为 yilia。<br>接着进入theme/yilia目录,输入：</p>
-<blockquote>
-<p>$ git pull</p>
-</blockquote>
-<p>然后<code>hexo g</code>，<code>hexo s</code> 后再打开<code>localhost:4000</code>就可以看到新主题了。</p>
-<p>附：<a href="http://www.zhihu.com/question/24422335" target="_blank" rel="external">hexo主题知乎回答</a></p>
-<h2 id="注册github账号">注册github账号</h2><p>略~</p>
-<h2 id="5-_关联github账号">5. 关联github账号</h2><ul>
-<li>设置本机邮箱和用户名，在git教程里面已经有了：</li>
-</ul>
-<blockquote>
-<p>$ git config –global user.name “Your Name”</p>
-<p>$ git config –global user.email “email@example.com”</p>
-</blockquote>
-<ul>
-<li>创建SSH Key:<blockquote>
-<p>$ ssh-keygen -t rsa -C “youremail@example.com”</p>
-</blockquote>
-</li>
-</ul>
-<p>记得改成你自己的邮箱，一路回车确定。</p>
-<p>完了后，你可以在用户主目录里找到.ssh目录，里面有<code>id_rsa</code>和<code>id_rsa.pub</code>两个文件，这两个就是SSH Key的秘钥对，<code>id_rsa</code>是私钥，最好不要泄露出去。</p>
-<ul>
-<li>建立关联</li>
-</ul>
-<p>打开<code>id_rsa.pub</code>文件，复制里面全部内容。</p>
-<p>登录github，进入 个人设置 <code>Settings</code>，点击左边栏<code>SSH keys</code>按钮，再点击右边<code>Add SSH key</code>，再在Title顺便输入个名字，把刚才复制的文件内容粘贴到Key里面。 最后点击Add Key。 </p>
-<ul>
-<li>检验是否连接成功</li>
-</ul>
-<p>在bash输入 </p>
-<blockquote>
-<p>$ ssh -T git@github.com</p>
-</blockquote>
-<p>如果提示</p>
-<blockquote>
-<p>You’ve successfully authenticated, but GitHub does not provide shell access.</p>
-</blockquote>
-<p>就证明连接成功了。</p>
-<p>对了，记得设置你的github关联邮箱。</p>
-<h2 id="6-_部署hexo到github">6. 部署hexo到github</h2><ul>
-<li>先看看如何在github开启个人网页<br>在<code>your proflie</code></li>
-</ul>
-<p><img src="http://i.imgur.com/NAl6wYy.jpg" alt=""></p>
-<p>点击<code>respositories</code>再点击<code>new</code>。进入</p>
-<p><img src="http://i.imgur.com/xJeL3Hd.jpg" alt=""></p>
-<p><code>repository name</code>那你填写 <code>你的github账号名.github.io</code><br>然后点<code>create</code>。</p>
-<p>（资源命名必须符合这样的规则username/username.github.io）</p>
-<p>它会自动进入这个项目，<br><img src="http://i.imgur.com/VWyqxga.jpg" alt=""><br>点击setting，再点这个。<br><img src="http://i.imgur.com/khWzIKU.jpg" alt=""></p>
-<p>然后填写相关信息，点击<code>Continue to layouts</code>,选个主题,再点<code>Publish page</code>。</p>
-<p>等个1到10分钟？ 然后就可以访问<code>http://你的github账号名.github.io/</code> 了</p>
-<ul>
-<li>接下来就是部署我们的hexo到github了</li>
-</ul>
-<p>还是修改<code>_config.yml</code> 文件。<br>在文件底部加入</p>
-<blockquote>
-<p>deploy:</p>
-<p>type: git</p>
-<p>repository: git@github.com:yourname/yourname.github.io.git</p>
-<p>branch: master</p>
-</blockquote>
-<p>注意hexo 更新到3.0之后，deploy的<code>type</code>的github需要改成git。所有冒号后面都要空格一下。</p>
-<p><code>repository</code>改成你的个人github页面的项目SSH地址（就是我们刚才在github开启的个人网页）,获取方法是进入项目后，点击SSH后再点击复制。</p>
-<p><img src="http://i.imgur.com/KaAPKxZ.jpg" alt=""></p>
-<p>修改完后，就要进入bash，输入：</p>
-<blockquote>
-<p>$ hexo g</p>
-<p>$ hexo d</p>
-</blockquote>
-<p>如果提示没有deploy 命令，就要输入：</p>
-<blockquote>
-<p>$ npm install hexo-deployer-git –save</p>
-</blockquote>
-<p>安装deployer模块。</p>
-<p>然后再输入<code>hexo d</code>，提交部署文件。</p>
-<p>这里如果提示：</p>
-<blockquote>
-<p>warning: LF will be replaced by CRLF… </p>
-</blockquote>
-<p>那是因为windows中的换行符为 CRLF， 而在linux下的换行符为LF，我们要取消windows下的自动换行，<br>输入:</p>
-<blockquote>
-<p>$ git config –global core.autocrlf false </p>
-</blockquote>
-<p>再执行<code>hexo d</code></p>
-<p>如果成功，就会提示：</p>
-<p><img src="http://i.imgur.com/zYfVeOl.jpg" alt=""></p>
-<p>这下，你可以登录你的github个人网页看看效果啦。</p>
-<p><img src="../../../../images/0.jpg" alt=""></p>
-<h2 id="附加内容">附加内容</h2><ol>
-<li>Markdown 语法说明：<a href="http://wowubuntu.com/markdown/" target="_blank" rel="external">http://wowubuntu.com/markdown/</a></li>
-<li>Hexo静态博客使用指南：<a href="http://segmentfault.com/a/1190000002538363" target="_blank" rel="external">http://segmentfault.com/a/1190000002538363</a></li>
-</ol>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端/">前端</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
 	</div>
 
       
