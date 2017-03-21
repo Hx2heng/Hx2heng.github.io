@@ -302,13 +302,22 @@ scripts:
   scrollspy: <span class="literal">true</span>
   tab: <span class="literal">true</span>
   affix: <span class="literal">true</span></span></span>
-</code></pre><p>如果想给不同页面配置不用的.bootstraprc文件或者不想把.bootstraprc文件放在根目录，可以修改入口文件的bootstrap-loader的后缀:</p>
+</code></pre><p>如果想给不同页面配置不用的.bootstraprc文件或者不想把.bootstraprc文件放在根目录，可以修改入口文件的bootstrap-loader的后缀，</p>
 <p>格式：<strong><code>bootstrap-loader/lib/bootstrap.loader?configFilePath=[文件位置]/[文件名字].[文件类型]!bootstrap-loader/no-op.js</code></strong></p>
 <p>eg:</p>
 <pre><code>entry: {
     index: [`<span class="keyword">bootstrap</span>-loader/lib/<span class="keyword">bootstrap</span>.loader?configFilePath=<span class="label">${__dirname}</span>/.bootstraprc!<span class="keyword">bootstrap</span>-loader/<span class="keyword">no</span>-op.js`, './index.js'],
     <span class="keyword">test</span>: './<span class="keyword">test</span>.js',
-},
+}
+</code></pre><p>而自定义样式需要在.bootstraprc添加配置(按需要设置，不设置注释就可以):</p>
+<pre><code><span class="comment">//在Bootstrap variables之前加载</span>
+<span class="string">preBootstrapCustomizations:</span> .<span class="regexp">/app/</span>styles<span class="regexp">/bootstrap/</span>pre-customizations.scss
+
+<span class="comment">//在Bootstrap variables之后bootstrap之前加载</span>
+<span class="string">bootstrapCustomizations:</span> .<span class="regexp">/app/</span>styles<span class="regexp">/bootstrap/</span>customizations.scss
+
+<span class="comment">//在bootstrap之后加载</span>
+<span class="string">appStyles:</span> .<span class="regexp">/app/</span>styles/app.scss
 </code></pre><p>bootstrap-loader的官方源码：<a href="https://github.com/shakacode/bootstrap-loader">https://github.com/shakacode/bootstrap-loader</a>，上面会有更多解决方案。</p>
 
       
